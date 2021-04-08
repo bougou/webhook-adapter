@@ -19,7 +19,6 @@ func NewSender(token string, msgType string) *Sender {
 }
 
 func (s *Sender) Send(payload *models.Payload) error {
-	fmt.Println("dingtak sender")
 	var msg *Msg
 
 	switch s.msgType {

@@ -2,13 +2,20 @@ package feishu
 
 import "time"
 
-func init() {
-	SupportedMsgtype["text"] = true      // 文本
-	SupportedMsgtype["image"] = true     // 图片
-	SupportedMsgtype["post"] = true      // 富文本（文章）
-	SupportedMsgtype["sharechat"] = true // 群名片
+const (
+	MsgTypeText        = "text"
+	MsgTypeImage       = "image"
+	MsgTypePost        = "post"
+	MsgTypeShareChat   = "sharechat"
+	MsgTypeInteractive = "interactive"
+)
 
-	SupportedMsgtype["interactive"] = true // 消息卡片
+func init() {
+	SupportedMsgtype[MsgTypeText] = true        // 文本
+	SupportedMsgtype[MsgTypeImage] = true       // 图片
+	SupportedMsgtype[MsgTypePost] = true        // 富文本（文章）
+	SupportedMsgtype[MsgTypeShareChat] = true   // 群名片
+	SupportedMsgtype[MsgTypeInteractive] = true // 消息卡片
 }
 
 type Msg struct {

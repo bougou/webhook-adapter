@@ -15,6 +15,6 @@ func NewFeishuSender(token string, msgType string) models.Sender {
 	return feishu.NewSender(token, msgType)
 }
 
-func NewWeixinSender(key string, msgType string) models.Sender {
-	return weixin.NewSender(key, msgType)
+func NewWeixinSender(token string, msgType string) models.Sender {
+	return weixin.NewSender(token, msgType)
 }

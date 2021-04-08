@@ -46,7 +46,7 @@ func NewMsgNews(articles []*Article) *Msg {
 	}
 
 	return &Msg{
-		MsgType: "news",
+		MsgType: MsgTypeNews,
 		News: &News{
 			Articles: a,
 		},
@@ -54,13 +54,8 @@ func NewMsgNews(articles []*Article) *Msg {
 
 }
 
-func (b *WeixinGroupBot) SendNews(articles []*Article) error {
-	msg := NewMsgNews(articles)
-	return b.Send(msg)
-}
-
 func NewMsgNewsFromPayload(payload *models.Payload) *Msg {
-	return &Msg{
-		MsgType: "news",
-	}
+	// Todo, construct articles from payload
+	articles := []*Article{}
+	return NewMsgNews(articles)
 }

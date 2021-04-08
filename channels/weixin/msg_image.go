@@ -25,7 +25,7 @@ func NewMsgImage(imgByte []byte) *Msg {
 	imgBase64 := base64.StdEncoding.EncodeToString(imgByte)
 
 	return &Msg{
-		MsgType: "image",
+		MsgType: MsgTypeImage,
 		Image: &Image{
 			Base64: imgBase64,
 			MD5:    string(imgMD5),
@@ -33,13 +33,10 @@ func NewMsgImage(imgByte []byte) *Msg {
 	}
 }
 
-func (b *WeixinGroupBot) SendImage(imgByte []byte) error {
-	msg := NewMsgImage(imgByte)
-	return b.Send(msg)
-}
-
 func NewMsgImageFromPayload(payload *models.Payload) *Msg {
-	return &Msg{
-		MsgType: "image",
+	imgByte := []byte{}
+	if len(payload.Images) > 0 {
+		imgByte = payload.Images[0].Bytes
 	}
+	return NewMsgImage(imgByte)
 }

@@ -15,7 +15,7 @@ type ActionCard struct {
 }
 
 func (*ActionCard) dingTalkMsgtype() string {
-	return "actionCard"
+	return MsgTypeActionCard
 }
 
 type Btn struct {
@@ -49,25 +49,18 @@ func NewActionCard(title string, text string, horizonBtn bool, btns []*Btn) *Act
 	return actionCard
 }
 
-func NewMsgActionCardFromPayload(p *models.Payload) *Msg {
-
-	actionCard := &ActionCard{}
-	return &Msg{
-		MsgType:    "actionCard",
-		ActionCard: actionCard,
-	}
-
-}
-
 func NewMsgActionCard(actionCard *ActionCard) *Msg {
 	return &Msg{
-		MsgType:    "actionCard",
+		MsgType:    MsgTypeActionCard,
 		ActionCard: actionCard,
 	}
 }
 
-func (bot *DingtalkGroupBot) SendActionCard(title string, text string, horizonBtn bool, btns []*Btn) error {
-	actionCard := NewActionCard(title, text, horizonBtn, btns)
-	msg := NewMsgActionCard(actionCard)
-	return bot.send(msg)
+func NewMsgActionCardFromPayload(p *models.Payload) *Msg {
+	// Todo, construct actionCard from payload
+	actionCard := &ActionCard{}
+	return &Msg{
+		MsgType:    MsgTypeActionCard,
+		ActionCard: actionCard,
+	}
 }

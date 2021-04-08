@@ -66,22 +66,20 @@ func NewMsgPost(title string, lines []*Line) *Msg {
 	}
 
 	return &Msg{
-		MsgType: "post",
+		MsgType: MsgTypePost,
 		Content: &Content{
 			Post: post,
 		},
 	}
 }
-func (bot *FeishuGroupBot) SendPost(title string, lines []*Line) error {
+
+func NewMsgPostFromPayload(payload *models.Payload) *Msg {
+	// Todo
 	// 先上传图片
 	// bot.UploadFile("")
 
-	msg := NewMsgPost(title, lines)
-	return bot.Send(msg)
-}
+	title := ""
+	lines := []*Line{}
 
-func NewMsgPostFromPayload(payload *models.Payload) *Msg {
-	return &Msg{
-		MsgType: "post",
-	}
+	return NewMsgPost(title, lines)
 }

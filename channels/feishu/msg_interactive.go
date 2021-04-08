@@ -2,24 +2,6 @@ package feishu
 
 import "github.com/bougou/webhook-adapter/models"
 
-func NewMsgCard(card *Card) *Msg {
-	return &Msg{
-		MsgType: "interactive",
-		Card:    card,
-	}
-}
-
-func NewMsgInteractiveFromPayload(payload *models.Payload) *Msg {
-	return &Msg{
-		MsgType: "interactive",
-	}
-}
-
-func (bot *FeishuGroupBot) SendCard(card *Card) error {
-	msg := NewMsgCard(card)
-	return bot.Send(msg)
-}
-
 type Card struct {
 	Config        *CardConfig  `json:"config"`
 	CardLink      *MultiURL    `json:"card_link"`
@@ -229,4 +211,18 @@ type Option struct {
 type Confirm struct {
 	Title *Text `json:"title"` // 弹框标题, 仅支持"plain_text"
 	Text  *Text `json:"text"`  // 弹框内容, 仅支持"plain_text"
+}
+
+func NewMsgCard(card *Card) *Msg {
+	return &Msg{
+		MsgType: MsgTypeInteractive,
+		Card:    card,
+	}
+}
+
+func NewMsgInteractiveFromPayload(payload *models.Payload) *Msg {
+	// Todo, construct card from payload
+	card := &Card{}
+
+	return NewMsgCard(card)
 }

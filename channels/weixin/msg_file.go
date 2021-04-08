@@ -13,7 +13,7 @@ type File struct {
 
 func NewMsgFile(mediaID string) *Msg {
 	return &Msg{
-		MsgType: "file",
+		MsgType: MsgTypeFile,
 		File: &File{
 			MediaID: mediaID,
 		},
@@ -31,7 +31,7 @@ func (b *WeixinGroupBot) SendFile(filename string, fileReader io.Reader) error {
 }
 
 func NewMsgFileFromPayload(payload *models.Payload) *Msg {
-	return &Msg{
-		MsgType: "file",
-	}
+	// Todo, first upload file to get mediaID
+	mediaID := ""
+	return NewMsgFile(mediaID)
 }

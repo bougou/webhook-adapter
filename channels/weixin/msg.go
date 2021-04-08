@@ -1,11 +1,19 @@
 package weixin
 
+const (
+	MsgTypeFile     = "file"
+	MsgTypeImage    = "image"
+	MsgTypeMarkdown = "markdown"
+	MsgTypeNews     = "news"
+	MsgTypeText     = "text"
+)
+
 func init() {
-	SupportedMsgtype["file"] = true
-	SupportedMsgtype["image"] = true
-	SupportedMsgtype["markdown"] = true
-	SupportedMsgtype["news"] = true
-	SupportedMsgtype["text"] = true
+	SupportedMsgtype[MsgTypeFile] = true
+	SupportedMsgtype[MsgTypeImage] = true
+	SupportedMsgtype[MsgTypeMarkdown] = true
+	SupportedMsgtype[MsgTypeNews] = true
+	SupportedMsgtype[MsgTypeText] = true
 
 }
 

@@ -7,7 +7,7 @@ type Text struct {
 }
 
 func (*Text) dingTalkMsgtype() string {
-	return "text"
+	return MsgTypeText
 }
 
 func NewText(content string) *Text {
@@ -16,7 +16,7 @@ func NewText(content string) *Text {
 
 func NewMsgText(text *Text) *Msg {
 	return &Msg{
-		MsgType: "text",
+		MsgType: MsgTypeText,
 		Text:    text,
 	}
 }
@@ -30,7 +30,7 @@ func (bot *DingtalkGroupBot) SendText(content string, atMobiles []string, atAll 
 
 func NewMsgTextFromPayload(payload *models.Payload) *Msg {
 	return &Msg{
-		MsgType: "text",
+		MsgType: MsgTypeText,
 		Text:    NewText(payload.Text),
 	}
 }

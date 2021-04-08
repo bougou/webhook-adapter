@@ -10,7 +10,7 @@ type Link struct {
 }
 
 func (*Link) dingTalkMsgtype() string {
-	return "link"
+	return MsgTypeLink
 }
 
 func NewLink(title string, text string, messageURL string) *Link {
@@ -28,20 +28,12 @@ func (link *Link) WithPicURL(picURL string) *Link {
 
 func NewMsgLink(link *Link) *Msg {
 	return &Msg{
-		MsgType: "link",
+		MsgType: MsgTypeLink,
 		Link:    link,
 	}
 }
 
-func (bot *DingtalkGroupBot) SendLink(title string, text string, messageURL string, picURL string) error {
-	link := NewLink(title, text, messageURL)
-	link.WithPicURL(picURL)
-	msg := NewMsgLink(link)
-	return bot.send(msg)
-}
-
 func NewMsgLinkFromPayload(payload *models.Payload) *Msg {
-	return &Msg{
-		MsgType: "feedCard",
-	}
+	link := NewLink(payload.Title, payload.Text, "")
+	return NewMsgLink(link)
 }

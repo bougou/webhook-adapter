@@ -8,7 +8,7 @@ type Markdown struct {
 }
 
 func (*Markdown) dingTalkMsgtype() string {
-	return "markdown"
+	return MsgTypeMarkdown
 }
 
 func (md *Markdown) Valid() bool {
@@ -24,20 +24,16 @@ func NewMarkdown(title string, text string) *Markdown {
 
 func NewMsgMarkdown(md *Markdown) *Msg {
 	return &Msg{
-		MsgType:  "markdown",
+		MsgType:  MsgTypeMarkdown,
 		Markdown: md,
 	}
 }
 
-func (bot *DingtalkGroupBot) SendMarkdown(title string, text string, atMobiles []string, atAll bool) error {
-	md := NewMarkdown(title, text)
-	msg := NewMsgMarkdown(md)
-	msg.WithAtAll(atAll).WithAtMobiles(atMobiles)
-	return bot.send(msg)
-}
-
 func NewMsgMarkdownFromPayload(payload *models.Payload) *Msg {
-	return &Msg{
-		MsgType: "feedCard",
-	}
+	md := NewMarkdown(payload.Title, payload.Markdown)
+	msg := NewMsgMarkdown(md)
+	msg.WithAtMobiles(payload.At.AtMobiles)
+	msg.WithAtAll(payload.At.AtAll)
+
+	return msg
 }

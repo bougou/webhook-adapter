@@ -36,17 +36,12 @@ _one underscore_
 func NewMsgMarkdown(content string) *Msg {
 	truncated := TruncateToValidUTF8(content, maxMarkdownBytes, truncatedMark)
 	msg := &Msg{
-		MsgType: "markdown",
+		MsgType: MsgTypeMarkdown,
 		Markdown: &Markdown{
 			Content: truncated,
 		},
 	}
 	return msg
-}
-
-func (b *WeixinGroupBot) SendMarkdown(content string) error {
-	msg := NewMsgMarkdown(content)
-	return b.Send(msg)
 }
 
 func NewMsgMarkdownFromPayload(payload *models.Payload) *Msg {

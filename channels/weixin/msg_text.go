@@ -48,20 +48,9 @@ func NewText(content string, options ...TextOption) *Text {
 
 func NewMsgText(text *Text) *Msg {
 	return &Msg{
-		MsgType: "text",
+		MsgType: MsgTypeText,
 		Text:    text,
 	}
-}
-
-func (b *WeixinGroupBot) SendText(content string, mentionedList []string, mentionedMobileList []string) error {
-	text := NewText(
-		content,
-		TextMentionedListOpt(mentionedList),
-		TextMentionedMobileListOpt(mentionedMobileList),
-	)
-
-	msg := NewMsgText(text)
-	return b.Send(msg)
 }
 
 func NewMsgTextFromPayload(payload *models.Payload) *Msg {

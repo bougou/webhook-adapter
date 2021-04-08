@@ -7,7 +7,7 @@ type FeedCard struct {
 }
 
 func (*FeedCard) dingTalkMsgtype() string {
-	return "feedcard"
+	return MsgTypeFeedCard
 }
 
 type FeedCardLink struct {
@@ -28,19 +28,14 @@ func NewFeedCard(links []*FeedCardLink) *FeedCard {
 
 func NewMsgFeedCard(feedCard *FeedCard) *Msg {
 	return &Msg{
-		MsgType:  "feedCard",
+		MsgType:  MsgTypeFeedCard,
 		FeedCard: feedCard,
 	}
 }
 
-func (bot *DingtalkGroupBot) SendFeedCard(links []*FeedCardLink) error {
-	feedCard := NewFeedCard(links)
-	msg := NewMsgFeedCard(feedCard)
-	return bot.send(msg)
-}
-
 func NewMsgFeedCardFromPayload(payload *models.Payload) *Msg {
-	return &Msg{
-		MsgType: "feedCard",
-	}
+	// Todo, construct feedCardLinks from payload
+	feedCardLinks := []*FeedCardLink{}
+	feedCard := NewFeedCard(feedCardLinks)
+	return NewMsgFeedCard(feedCard)
 }

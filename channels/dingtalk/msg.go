@@ -1,11 +1,19 @@
 package dingtalk
 
+const (
+	MsgTypeText       = "text"
+	MsgTypeMarkdown   = "markdown"
+	MsgTypeLink       = "link"
+	MsgTypeFeedCard   = "feedcard"
+	MsgTypeActionCard = "actioncard"
+)
+
 func init() {
-	SupportedMsgtype["text"] = true
-	SupportedMsgtype["markdown"] = true
-	SupportedMsgtype["link"] = true
-	SupportedMsgtype["feedcard"] = true
-	SupportedMsgtype["actioncard"] = true
+	SupportedMsgtype[MsgTypeText] = true
+	SupportedMsgtype[MsgTypeMarkdown] = true
+	SupportedMsgtype[MsgTypeLink] = true
+	SupportedMsgtype[MsgTypeFeedCard] = true
+	SupportedMsgtype[MsgTypeActionCard] = true
 }
 
 type Msg struct {
@@ -24,7 +32,7 @@ type At struct {
 }
 
 func (msg *Msg) SupportAt() bool {
-	if msg.MsgType == "text" || msg.MsgType == "markdown" {
+	if msg.MsgType == MsgTypeText || msg.MsgType == MsgTypeMarkdown {
 		return true
 	}
 	return false

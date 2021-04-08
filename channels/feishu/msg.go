@@ -1,7 +1,5 @@
 package feishu
 
-import "time"
-
 const (
 	MsgTypeText        = "text"
 	MsgTypeImage       = "image"
@@ -23,12 +21,13 @@ func init() {
 }
 
 type Msg struct {
-	Timestamp time.Time `json:"timestamp"`
-	Sign      string    `json:"sign"`
+	// 开启签名验证后发送文本消息
+	// Timestamp time.Time `json:"timestamp,omitempty"`
+	// Sign      string    `json:"sign,omitempty"`
 
 	MsgType string `json:"msg_type"`
 
-	Content *Content `json:"content"`
+	Content *Content `json:"content,omitempty"`
 
 	Card        *Card  `json:"card,omitempty"`
 	RootID      string `json:"root_id,omitempty"`      // 需要回复的消息的open_message_id

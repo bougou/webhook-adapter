@@ -2,10 +2,10 @@ package card
 
 // ModuleDiv 内容模块
 type ModuleDiv struct {
-	Tag    string   `json:"tag"`   // div
-	Text   *Text    `json:"text"`  // 单个文本展示, 和 field 至少要有一个
-	Fields []Field  `json:"field"` // 多个文本展示, 和 text 至少要有一个
-	Extra  *Element `json:"extra"` // 展示附加元素, 最多可展示一个元素
+	Tag    string   `json:"tag"`             // div
+	Text   *Text    `json:"text,omitempty"`  // 单个文本展示, 和 field 至少要有一个
+	Fields []Field  `json:"field,omitempty"` // 多个文本展示, 和 text 至少要有一个
+	Extra  *Element `json:"extra,omitempty"` // 展示附加元素, 最多可展示一个元素
 }
 
 func (e *ModuleDiv) cardModule() string {

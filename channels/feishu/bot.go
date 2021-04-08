@@ -40,7 +40,8 @@ func NewFeishuGroupBot(token string) *FeishuGroupBot {
 }
 
 func (bot *FeishuGroupBot) Addr() string {
-	return fmt.Sprintf("%s/robot/send?token=%s", bot.addr, bot.token)
+	// Note, use v2
+	return fmt.Sprintf("%s/open-apis/bot/v2/hook/%s", bot.addr, bot.token)
 }
 
 func (bot *FeishuGroupBot) AddrForUploadImage() string {

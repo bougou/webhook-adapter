@@ -12,6 +12,9 @@ type Sender struct {
 }
 
 func NewSender(key string, msgType string) *Sender {
+	if msgType == "" {
+		msgType = MsgTypeMarkdown
+	}
 
 	return &Sender{
 		bot:     NewWexinGroupBot(key),

@@ -12,6 +12,10 @@ type Sender struct {
 }
 
 func NewSender(token string, msgType string) *Sender {
+	if msgType == "" {
+		msgType = MsgTypeMarkdown
+	}
+
 	return &Sender{
 		bot:     NewFeishuGroupBot(token),
 		msgType: msgType,

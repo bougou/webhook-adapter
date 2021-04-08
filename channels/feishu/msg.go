@@ -8,6 +8,9 @@ const (
 	MsgTypePost        = "post"
 	MsgTypeShareChat   = "sharechat"
 	MsgTypeInteractive = "interactive"
+
+	// Underlying, we use interactive to implement markdown
+	MsgTypeMarkdown = "markdown"
 )
 
 func init() {
@@ -16,6 +19,7 @@ func init() {
 	SupportedMsgtype[MsgTypePost] = true        // 富文本（文章）
 	SupportedMsgtype[MsgTypeShareChat] = true   // 群名片
 	SupportedMsgtype[MsgTypeInteractive] = true // 消息卡片
+	SupportedMsgtype[MsgTypeMarkdown] = true    // markdown 文本
 }
 
 type Msg struct {

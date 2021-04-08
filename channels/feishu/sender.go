@@ -32,6 +32,8 @@ func (s *Sender) Send(payload *models.Payload) error {
 		msg = NewMsgShareChatFromPayload(payload)
 	case "interactive":
 		msg = NewMsgInteractiveFromPayload(payload)
+	case "markdown":
+		msg = NewMsgMarkdownFromPayload(payload)
 	default:
 		return fmt.Errorf("unkown msg type")
 	}

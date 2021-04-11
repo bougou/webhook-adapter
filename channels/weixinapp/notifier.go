@@ -15,6 +15,13 @@ const ChannelTypeWeixin = "weixinapp"
 
 var SupportedMsgtype = make(map[string]bool)
 
+func ValidMsgtype(msgtype string) bool {
+	if _, exists := SupportedMsgtype[msgtype]; !exists {
+		return false
+	}
+	return true
+}
+
 // ErrCodeAboutTokens contains weixinapp
 // https://work.weixin.qq.com/api/doc/90000/90139/90313
 var ErrCodeAboutTokens = []int{
@@ -119,13 +126,10 @@ func (n *Notifier) Send(msg *Msg) error {
 		}
 	}
 
-	fmt.Println("token: ", n.token)
 	msgBytes, err := json.Marshal(msg)
 	if err != nil {
 		return err
 	}
-
-	fmt.Println(string(msgBytes))
 
 	req, err := http.NewRequest("POST", n.Addr(), bytes.NewBuffer(msgBytes))
 	if err != nil {

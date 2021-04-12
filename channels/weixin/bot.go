@@ -7,7 +7,6 @@ import (
 	"io"
 	"mime/multipart"
 	"net/http"
-	"strings"
 	"time"
 )
 
@@ -45,15 +44,6 @@ func (bot *WeixinGroupBot) Addr() string {
 
 func (bot *WeixinGroupBot) AddrForUpload() string {
 	return fmt.Sprintf("%s/cgi-bin/webhook/upload_media?key=%s&type=file", bot.addr, bot.key)
-}
-
-func TruncateToValidUTF8(s string, byteSize int, mark string) string {
-	b := []byte(s)
-	if len(b) > byteSize {
-		l := byteSize - len(mark)
-		return strings.ToValidUTF8(string(b[:l]), "") + mark
-	}
-	return s
 }
 
 func (bot *WeixinGroupBot) Send(msg *Msg) error {

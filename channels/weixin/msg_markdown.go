@@ -1,7 +1,10 @@
 package weixin
 
 import (
+	"strings"
+
 	"github.com/bougou/webhook-adapter/models"
+	"github.com/bougou/webhook-adapter/utils"
 )
 
 const maxMarkdownBytes int = 4096
@@ -34,7 +37,9 @@ _one underscore_
 `
 
 func NewMsgMarkdown(content string) *Msg {
-	truncated := TruncateToValidUTF8(content, maxMarkdownBytes, truncatedMark)
+	content = SanitizeMarkdown(content)
+	truncated := utils.TruncateToValidUTF8(content, maxMarkdownBytes, truncatedMark)
+
 	msg := &Msg{
 		MsgType: MsgTypeMarkdown,
 		Markdown: &Markdown{
@@ -46,4 +51,14 @@ func NewMsgMarkdown(content string) *Msg {
 
 func NewMsgMarkdownFromPayload(payload *models.Payload) *Msg {
 	return NewMsgMarkdown(payload.Markdown)
+}
+
+func SanitizeMarkdown(content string) string {
+	// not need <br> for line break
+	content = strings.ReplaceAll(content, "<br>", "")
+
+	// remove `>` line
+	content = strings.ReplaceAll(content, "\n>\n", "\n")
+
+	return content
 }

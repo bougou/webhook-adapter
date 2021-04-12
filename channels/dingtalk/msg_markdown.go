@@ -1,6 +1,8 @@
 package dingtalk
 
-import "github.com/bougou/webhook-adapter/models"
+import (
+	"github.com/bougou/webhook-adapter/models"
+)
 
 type Markdown struct {
 	Title string `json:"title"`
@@ -19,7 +21,7 @@ func (md *Markdown) Valid() bool {
 }
 
 func NewMarkdown(title string, text string) *Markdown {
-	return &Markdown{title, text}
+	return &Markdown{title, SanitizeMarkdown(text)}
 }
 
 func NewMsgMarkdown(md *Markdown) *Msg {
@@ -36,4 +38,8 @@ func NewMsgMarkdownFromPayload(payload *models.Payload) *Msg {
 	msg.WithAtAll(payload.At.AtAll)
 
 	return msg
+}
+
+func SanitizeMarkdown(content string) string {
+	return content
 }

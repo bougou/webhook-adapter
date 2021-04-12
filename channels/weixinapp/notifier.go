@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strings"
 	"time"
 )
 
@@ -148,13 +147,4 @@ func (n *Notifier) Send(msg *Msg) error {
 	}
 
 	return nil
-}
-
-func TruncateToValidUTF8(s string, byteSize int, mark string) string {
-	b := []byte(s)
-	if len(b) > byteSize {
-		l := byteSize - len(mark)
-		return strings.ToValidUTF8(string(b[:l]), "") + mark
-	}
-	return s
 }

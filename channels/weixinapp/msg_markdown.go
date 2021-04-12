@@ -1,7 +1,13 @@
 package weixinapp
 
-import "github.com/bougou/webhook-adapter/models"
+import (
+	"strings"
 
+	"github.com/bougou/webhook-adapter/models"
+	"github.com/bougou/webhook-adapter/utils"
+)
+
+// see: https://work.weixin.qq.com/api/doc/90000/90135/90236#markdown%E6%B6%88%E6%81%AF
 const maxMarkdownBytes int = 2048
 const truncatedMark = "\n... more is truncated due to limit"
 
@@ -10,10 +16,13 @@ type Markdown struct {
 }
 
 func NewMsgMarkdown(content string) *Msg {
+	content = SanitizeMarkdown(content)
+	truncated := utils.TruncateToValidUTF8(content, maxMarkdownBytes, truncatedMark)
+
 	return &Msg{
 		MsgType: MsgTypeMarkdown,
 		Markdown: &Markdown{
-			Content: content,
+			Content: truncated,
 		},
 	}
 }
@@ -21,4 +30,14 @@ func NewMsgMarkdown(content string) *Msg {
 func NewMsgMarkdownFromPayload(payload *models.Payload) *Msg {
 
 	return NewMsgMarkdown(payload.Markdown)
+}
+
+func SanitizeMarkdown(content string) string {
+	// not need <br> for line break
+	content = strings.ReplaceAll(content, "<br>", "")
+
+	// remove `>` line
+	content = strings.ReplaceAll(content, "\n>\n", "\n")
+
+	return content
 }

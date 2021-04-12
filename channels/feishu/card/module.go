@@ -1,5 +1,10 @@
 package card
 
+import (
+	"fmt"
+	"strings"
+)
+
 // ModuleDiv 内容模块
 type ModuleDiv struct {
 	Tag    string   `json:"tag"`             // div
@@ -75,7 +80,15 @@ func (e *ModuleMarkdown) cardModule() string {
 func NewModuleMarkdown(content string, href *MultiURL) *ModuleMarkdown {
 	return &ModuleMarkdown{
 		Tag:     "markdown",
-		Content: content,
+		Content: SanitizeMarkdown(content),
 		Href:    href,
 	}
+}
+
+func SanitizeMarkdown(content string) string {
+	content = strings.ReplaceAll(content, "\n> ", "\n")
+	content = strings.ReplaceAll(content, "\n>", "")
+
+	fmt.Println(content)
+	return content
 }

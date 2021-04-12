@@ -1,6 +1,9 @@
 package weixin
 
-import "github.com/bougou/webhook-adapter/models"
+import (
+	"github.com/bougou/webhook-adapter/models"
+	"github.com/bougou/webhook-adapter/utils"
+)
 
 const maxTextBytes int = 2048
 
@@ -36,7 +39,7 @@ func TextMentionedMobileListOpt(mentionedMobileList []string) TextOption {
 
 func NewText(content string, options ...TextOption) *Text {
 	text := &Text{
-		Content: TruncateToValidUTF8(content, maxTextBytes, truncatedMark),
+		Content: utils.TruncateToValidUTF8(content, maxTextBytes, truncatedMark),
 	}
 
 	for _, option := range options {

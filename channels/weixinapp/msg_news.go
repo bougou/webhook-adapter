@@ -1,6 +1,9 @@
 package weixinapp
 
-import "github.com/bougou/webhook-adapter/models"
+import (
+	"github.com/bougou/webhook-adapter/models"
+	"github.com/bougou/webhook-adapter/utils"
+)
 
 const (
 	maxArticlesNumber   int = 8
@@ -21,13 +24,13 @@ type Article struct {
 
 func NewArticle(title string, url string) *Article {
 	return &Article{
-		Title: TruncateToValidUTF8(title, maxTitleBytes, truncatedMark),
+		Title: utils.TruncateToValidUTF8(title, maxTitleBytes, truncatedMark),
 		URL:   url,
 	}
 }
 
 func (a *Article) SetDescription(descr string) *Article {
-	a.Description = TruncateToValidUTF8(descr, maxDescriptionBytes, truncatedMark)
+	a.Description = utils.TruncateToValidUTF8(descr, maxDescriptionBytes, truncatedMark)
 	return a
 }
 

@@ -61,3 +61,21 @@ type ModuleAction struct {
 func (e *ModuleAction) cardModule() string {
 	return "action"
 }
+
+type ModuleMarkdown struct {
+	Tag     string    `json:"tag"` // markdown
+	Content string    `json:"content"`
+	Href    *MultiURL `json:"href,omitempty"` // 差异化跳转：仅在需要PC、移动端跳转不同链接使用
+}
+
+func (e *ModuleMarkdown) cardModule() string {
+	return "markdown"
+}
+
+func NewModuleMarkdown(content string, href *MultiURL) *ModuleMarkdown {
+	return &ModuleMarkdown{
+		Tag:     "markdown",
+		Content: content,
+		Href:    href,
+	}
+}

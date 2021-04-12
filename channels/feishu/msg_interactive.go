@@ -53,13 +53,18 @@ func NewMsgMarkdownFromPayload(payload *models.Payload) *Msg {
 func NewCardMarkdown(title string, markdown string) *Card {
 	elements := []card.CardModule{}
 
-	module := &card.ModuleDiv{
-		Tag: "div",
-		Text: &card.Text{
-			Tag:     "lark_md",
-			Content: markdown,
-		},
-	}
+	// see: https://open.feishu.cn/document/ukTMukTMukTM/uADOwUjLwgDM14CM4ATN
+
+	// module := &card.ModuleDiv{
+	// 	Tag: "div",
+	// 	Text: &card.Text{
+	// 		Tag:     "lark_md",
+	// 		Content: markdown,
+	// 	},
+	// }
+
+	module := card.NewModuleMarkdown(markdown, nil)
+
 	elements = append(elements, module)
 
 	return &Card{

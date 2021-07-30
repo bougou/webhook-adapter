@@ -54,7 +54,7 @@ func NewMsgMarkdownFromPayload(payload *models.Payload) *Msg {
 }
 
 func SanitizeMarkdown(content string) string {
-	// not need <br> for line break
+	// no need <br> for line break
 	content = strings.ReplaceAll(content, "<br>", "")
 
 	// remove `>` line

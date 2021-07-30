@@ -24,7 +24,7 @@ func ValidMsgtype(msgtype string) bool {
 }
 
 // DingtalkBot can send messages to dingtalk group
-// ref: https://developers.dingtalk.com/document/app/custom-robot-access/title-72m-8ag-pqw
+// ref: https://developers.dingtalk.com/document/app/message-types-and-data-format
 type DingtalkGroupBot struct {
 	addr         string
 	access_token string

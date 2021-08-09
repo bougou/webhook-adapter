@@ -4,7 +4,7 @@ type Payload struct {
 	Raw      string   `json:"raw"`
 	Title    string   `json:"title"`
 	Text     string   `json:"text"`
-	Markdown string   `json:"markdown"`
+	Markdown string   `json:"markdown"` // Don't put Title content in Markdown
 	Files    []string `json:"files"`
 	Images   []Image  `json:"images"`
 	Links    []Link   `json:"links"`

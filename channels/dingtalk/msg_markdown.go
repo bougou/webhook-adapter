@@ -1,11 +1,13 @@
 package dingtalk
 
 import (
+	"fmt"
+
 	"github.com/bougou/webhook-adapter/models"
 )
 
 type Markdown struct {
-	Title string `json:"title"`
+	Title string `json:"title"` // 首屏会话透出的展示内容
 	Text  string `json:"text"`
 }
 
@@ -21,7 +23,13 @@ func (md *Markdown) Valid() bool {
 }
 
 func NewMarkdown(title string, text string) *Markdown {
-	return &Markdown{title, SanitizeMarkdown(text)}
+	// DingTalk Markdown Title does not show on the Text page
+	t := SanitizeMarkdown(fmt.Sprintf("%s\n%s", title, text))
+
+	return &Markdown{
+		Title: title,
+		Text:  t,
+	}
 }
 
 func NewMsgMarkdown(md *Markdown) *Msg {

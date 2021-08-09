@@ -81,9 +81,5 @@ func NewModuleMarkdown(content string, href *MultiURL) *ModuleMarkdown {
 }
 
 func SanitizeMarkdown(content string) string {
-	// content = strings.ReplaceAll(content, "\n> ", "\n")
-	// content = strings.ReplaceAll(content, "\n>", "")
-
-	// fmt.Println(content)
 	return content
 }

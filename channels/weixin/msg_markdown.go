@@ -1,6 +1,7 @@
 package weixin
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/bougou/webhook-adapter/models"
@@ -50,7 +51,8 @@ func NewMsgMarkdown(content string) *Msg {
 }
 
 func NewMsgMarkdownFromPayload(payload *models.Payload) *Msg {
-	return NewMsgMarkdown(payload.Markdown)
+	m := fmt.Sprintf("%s\n%s", payload.Title, payload.Markdown)
+	return NewMsgMarkdown(m)
 }
 
 func SanitizeMarkdown(content string) string {

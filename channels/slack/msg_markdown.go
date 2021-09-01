@@ -5,6 +5,8 @@ import (
 	"github.com/slack-go/slack"
 )
 
+// Slack support only a small set of markdown syntax.
+// See: https://api.slack.com/reference/surfaces/formatting#basics
 func NewMsgMarkdownFromPayload(payload *models.Payload) Msg {
 	headerBlock := slack.NewHeaderBlock(
 		slack.NewTextBlockObject(

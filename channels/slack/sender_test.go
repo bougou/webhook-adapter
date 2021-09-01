@@ -18,7 +18,7 @@ func Test_SlackSender(t *testing.T) {
 	payload := &models.Payload{
 		Title:    "Hello",
 		Text:     "test",
-		Markdown: "## Hello",
+		Markdown: "*Hello*",
 	}
 	sender.Send(payload)
 }

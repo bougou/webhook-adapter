@@ -27,14 +27,7 @@ type SlackBot struct {
 }
 
 func NewSlackBot(token string, channel string) *SlackBot {
-	client := slack.New(token, slack.OptionDebug(true))
-
-	r, err := client.AuthTest()
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println("authresp:", r)
-
+	client := slack.New(token, slack.OptionDebug(false))
 	return &SlackBot{
 		token:   token,
 		channel: channel,
@@ -43,6 +36,11 @@ func NewSlackBot(token string, channel string) *SlackBot {
 }
 
 func (s *SlackBot) send(msg Msg) error {
+	if _, err := s.client.AuthTest(); err != nil {
+		msg := fmt.Sprintf("slack auth failed, err: %s", err)
+		return errors.New(msg)
+	}
+
 	_, _, err := s.client.PostMessage(
 		s.channel,
 		slack.MsgOptionBlocks(msg...),

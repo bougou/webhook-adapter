@@ -11,6 +11,14 @@ const (
 	maxDescriptionBytes int = 512
 )
 
+const (
+	MsgTypeNews = "news"
+)
+
+func init() {
+	SupportedMsgtypes[MsgTypeNews] = NewMsgNewsFromPayload
+}
+
 type News struct {
 	Articles []*Article `json:"articles"` // 图文消息，一个图文消息支持1到8条图文
 }
@@ -40,7 +48,7 @@ func (a *Article) SetPicURL(picURL string) *Article {
 }
 
 func NewMsgNews(articles []*Article) *Msg {
-	a := []*Article{}
+	var a []*Article
 
 	if len(articles) > 8 {
 		a = articles[:8]

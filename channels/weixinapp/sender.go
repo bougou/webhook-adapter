@@ -19,22 +19,10 @@ func NewSender(corpID string, agentID int, agentSecret string, msgType string) *
 }
 
 func (s *Sender) Send(payload *models.Payload) error {
-	var msg *Msg
-
-	switch s.msgType {
-	case "text":
-		msg = NewMsgTextFromPayload(payload)
-	case "file":
-		msg = NewMsgFileFromPayload(payload)
-	case "markdown":
-		msg = NewMsgMarkdownFromPayload(payload)
-	case "image":
-		msg = NewMsgImageFromPayload(payload)
-	case "news":
-		msg = NewMsgNewsFromPayload(payload)
-	default:
+	payload2Msg, ok := SupportedMsgtypes[s.msgType]
+	if !ok {
 		return fmt.Errorf("unkown msg type")
 	}
-
+	msg := payload2Msg(payload)
 	return s.notifer.Send(msg)
 }

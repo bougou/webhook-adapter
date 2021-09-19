@@ -11,6 +11,14 @@ import (
 const maxMarkdownBytes int = 4096
 const truncatedMark = "\n... more is truncated due to limit"
 
+const (
+	MsgTypeMarkdown = "markdown"
+)
+
+func init() {
+	SupportedMsgtypes[MsgTypeMarkdown] = NewMsgMarkdownFromPayload
+}
+
 type Markdown struct {
 	Content string `json:"content"` // this should be raw markdown string, weixin bot only support a small subset syntax
 }

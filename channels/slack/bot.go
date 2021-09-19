@@ -4,15 +4,18 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/bougou/webhook-adapter/models"
 	"github.com/slack-go/slack"
 )
 
 const ChannelTypeSlack = "slack"
 
-var SupportedMsgtype = make(map[string]bool)
+type Payload2Msg func(payload *models.Payload) Msg
+
+var SupportedMsgtypes = make(map[string]Payload2Msg)
 
 func ValidMsgtype(msgtype string) bool {
-	if _, exists := SupportedMsgtype[msgtype]; !exists {
+	if _, exists := SupportedMsgtypes[msgtype]; !exists {
 		return false
 	}
 	return true

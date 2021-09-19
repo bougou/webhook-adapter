@@ -2,6 +2,14 @@ package dingtalk
 
 import "github.com/bougou/webhook-adapter/models"
 
+const (
+	MsgTypeLink = "link"
+)
+
+func init() {
+	SupportedMsgtypes[MsgTypeLink] = NewMsgLinkFromPayload
+}
+
 type Link struct {
 	Text       string `json:"text"`
 	Title      string `json:"title"`

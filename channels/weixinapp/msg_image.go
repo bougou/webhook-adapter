@@ -2,6 +2,14 @@ package weixinapp
 
 import "github.com/bougou/webhook-adapter/models"
 
+const (
+	MsgTypeImage = "image"
+)
+
+func init() {
+	SupportedMsgtypes[MsgTypeImage] = NewMsgImageFromPayload
+}
+
 type Image struct {
 	MediaID string `json:"media_id"`
 }

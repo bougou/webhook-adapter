@@ -8,14 +8,18 @@ import (
 	"mime/multipart"
 	"net/http"
 	"time"
+
+	"github.com/bougou/webhook-adapter/models"
 )
 
 const ChannelTypeWeixin = "weixin"
 
-var SupportedMsgtype = make(map[string]bool)
+type Payload2Msg func(payload *models.Payload) *Msg
+
+var SupportedMsgtypes = make(map[string]Payload2Msg)
 
 func ValidMsgtype(msgtype string) bool {
-	if _, exists := SupportedMsgtype[msgtype]; !exists {
+	if _, exists := SupportedMsgtypes[msgtype]; !exists {
 		return false
 	}
 

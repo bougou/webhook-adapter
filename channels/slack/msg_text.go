@@ -5,6 +5,14 @@ import (
 	"github.com/slack-go/slack"
 )
 
+const (
+	MsgTypeText = "text"
+)
+
+func init() {
+	SupportedMsgtypes[MsgTypeText] = NewMsgTextFromPayload
+
+}
 func NewMsgTextFromPayload(payload *models.Payload) Msg {
 	headerText := slack.NewTextBlockObject(
 		slack.PlainTextType,
@@ -12,11 +20,13 @@ func NewMsgTextFromPayload(payload *models.Payload) Msg {
 		true, false,
 	)
 	if err := headerText.Validate(); err != nil {
+		return nil
 	}
 	headerBlock := slack.NewHeaderBlock(headerText)
 
 	bodyText := slack.NewTextBlockObject(slack.PlainTextType, payload.Text, false, false)
 	if err := bodyText.Validate(); err != nil {
+		return nil
 	}
 	bodyBlock := slack.NewSectionBlock(bodyText, nil, nil)
 

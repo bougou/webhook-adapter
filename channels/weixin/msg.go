@@ -1,22 +1,5 @@
 package weixin
 
-const (
-	MsgTypeFile     = "file"
-	MsgTypeImage    = "image"
-	MsgTypeMarkdown = "markdown"
-	MsgTypeNews     = "news"
-	MsgTypeText     = "text"
-)
-
-func init() {
-	SupportedMsgtype[MsgTypeFile] = true
-	SupportedMsgtype[MsgTypeImage] = true
-	SupportedMsgtype[MsgTypeMarkdown] = true
-	SupportedMsgtype[MsgTypeNews] = true
-	SupportedMsgtype[MsgTypeText] = true
-
-}
-
 type Msg struct {
 	MsgType  string    `json:"msgtype"`
 	File     *File     `json:"file,omitempty"`

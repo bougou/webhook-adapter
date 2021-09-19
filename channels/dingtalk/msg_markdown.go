@@ -6,6 +6,14 @@ import (
 	"github.com/bougou/webhook-adapter/models"
 )
 
+const (
+	MsgTypeMarkdown = "markdown"
+)
+
+func init() {
+	SupportedMsgtypes[MsgTypeMarkdown] = NewMsgMarkdownFromPayload
+}
+
 type Markdown struct {
 	Title string `json:"title"` // 首屏会话透出的展示内容
 	Text  string `json:"text"`

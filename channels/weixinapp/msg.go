@@ -1,33 +1,5 @@
 package weixinapp
 
-const (
-	MsgTypeText              = "text"
-	MsgTypeFile              = "file"
-	MsgTypeImage             = "image"
-	MsgTypeVoice             = "voice"
-	MsgTypeVideo             = "video"
-	MsgTypeNews              = "news"
-	MsgTypeMPNews            = "mpnews"
-	MsgTypeTextCard          = "textcard"
-	MsgTypeMarkdown          = "markdown"
-	MsgTypeMiniprogramNotice = "miniprogram_notice"
-	MsgTypeInteractiveCard   = "interactive_card"
-)
-
-func init() {
-	SupportedMsgtype[MsgTypeText] = true
-	SupportedMsgtype[MsgTypeFile] = true
-	SupportedMsgtype[MsgTypeImage] = true
-	SupportedMsgtype[MsgTypeVoice] = true
-	SupportedMsgtype[MsgTypeVideo] = true
-	SupportedMsgtype[MsgTypeNews] = true
-	SupportedMsgtype[MsgTypeMPNews] = true
-	SupportedMsgtype[MsgTypeTextCard] = true
-	SupportedMsgtype[MsgTypeMarkdown] = true
-	SupportedMsgtype[MsgTypeMiniprogramNotice] = true
-	SupportedMsgtype[MsgTypeInteractiveCard] = true
-}
-
 type Msg struct {
 	MsgType string `json:"msgtype"`
 	AgentID int    `json:"agentid"`

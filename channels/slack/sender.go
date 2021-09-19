@@ -23,15 +23,10 @@ func NewSender(token string, channel string, msgType string) *Sender {
 }
 
 func (s *Sender) Send(payload *models.Payload) error {
-	var msg Msg
-	switch s.msgType {
-	case "text":
-		msg = NewMsgTextFromPayload(payload)
-	case "markdown":
-		msg = NewMsgMarkdownFromPayload(payload)
-	default:
-		return fmt.Errorf("unkown msg type")
+	payload2Msg, ok := SupportedMsgtypes[s.msgType]
+	if !ok {
+		return fmt.Errorf("unkown msg type for slack")
 	}
-
+	msg := payload2Msg(payload)
 	return s.bot.send(msg)
 }

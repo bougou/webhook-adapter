@@ -7,6 +7,14 @@ import (
 	"github.com/bougou/webhook-adapter/models"
 )
 
+const (
+	MsgTypeFile = "file"
+)
+
+func init() {
+	SupportedMsgtypes[MsgTypeFile] = NewMsgFileFromPayload
+}
+
 type File struct {
 	MediaID string `json:"media_id"`
 }

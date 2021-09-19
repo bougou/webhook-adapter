@@ -1,21 +1,5 @@
 package dingtalk
 
-const (
-	MsgTypeText       = "text"
-	MsgTypeMarkdown   = "markdown"
-	MsgTypeLink       = "link"
-	MsgTypeFeedCard   = "feedcard"
-	MsgTypeActionCard = "actioncard"
-)
-
-func init() {
-	SupportedMsgtype[MsgTypeText] = true
-	SupportedMsgtype[MsgTypeMarkdown] = true
-	SupportedMsgtype[MsgTypeLink] = true
-	SupportedMsgtype[MsgTypeFeedCard] = true
-	SupportedMsgtype[MsgTypeActionCard] = true
-}
-
 type Msg struct {
 	MsgType    string      `json:"msgtype"`
 	Text       *Text       `json:"text,omitempty"`

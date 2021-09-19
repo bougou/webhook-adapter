@@ -2,6 +2,14 @@ package dingtalk
 
 import "github.com/bougou/webhook-adapter/models"
 
+const (
+	MsgTypeFeedCard = "feedcard"
+)
+
+func init() {
+	SupportedMsgtypes[MsgTypeFeedCard] = NewMsgFeedCardFromPayload
+}
+
 type FeedCard struct {
 	Links []*FeedCardLink `json:"links"`
 }

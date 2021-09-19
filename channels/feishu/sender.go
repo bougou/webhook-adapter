@@ -25,7 +25,7 @@ func NewSender(token string, msgType string) *Sender {
 func (s *Sender) Send(payload *models.Payload) error {
 	payload2Msg, ok := SupportedMsgtypes[s.msgType]
 	if !ok {
-		return fmt.Errorf("unkown msg type")
+		return fmt.Errorf("unkown msg type for feishu")
 	}
 	msg := payload2Msg(payload)
 	return s.bot.Send(msg)

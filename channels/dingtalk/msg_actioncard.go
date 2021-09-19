@@ -2,6 +2,14 @@ package dingtalk
 
 import "github.com/bougou/webhook-adapter/models"
 
+const (
+	MsgTypeActionCard = "actioncard"
+)
+
+func init() {
+	SupportedMsgtypes[MsgTypeActionCard] = NewMsgActionCardFromPayload
+}
+
 type ActionCard struct {
 	Title          string `json:"title"`          // seems no meaning now
 	Text           string `json:"text"`           // support markdown format

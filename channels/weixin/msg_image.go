@@ -8,7 +8,14 @@ import (
 	"github.com/bougou/webhook-adapter/models"
 )
 
-const maxImageSize = 2 * 1024 * 1024 // 2MB
+const (
+	MsgTypeImage = "image"
+	maxImageSize = 2 * 1024 * 1024 // 2MB
+)
+
+func init() {
+	SupportedMsgtypes[MsgTypeImage] = NewMsgImageFromPayload
+}
 
 type Image struct {
 	Base64 string `json:"base64"`

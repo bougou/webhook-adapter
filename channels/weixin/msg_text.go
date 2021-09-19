@@ -7,6 +7,14 @@ import (
 
 const maxTextBytes int = 2048
 
+const (
+	MsgTypeText = "text"
+)
+
+func init() {
+	SupportedMsgtypes[MsgTypeText] = NewMsgTextFromPayload
+}
+
 type Text struct {
 	Content             string   `json:"content"`
 	MentionedList       []string `json:"mentioned_list"`

@@ -23,22 +23,10 @@ func NewSender(token string, msgType string) *Sender {
 }
 
 func (s *Sender) Send(payload *models.Payload) error {
-	var msg *Msg
-
-	switch s.msgType {
-	case "text":
-		msg = NewMsgTextFromPayload(payload)
-	case "link":
-		msg = NewMsgLinkFromPayload(payload)
-	case "markdown":
-		msg = NewMsgMarkdownFromPayload(payload)
-	case "feedcard":
-		msg = NewMsgFeedCardFromPayload(payload)
-	case "actioncard":
-		msg = NewMsgActionCardFromPayload(payload)
-	default:
-		return fmt.Errorf("unkown msg type")
+	payload2Msg, ok := SupportedMsgtypes[s.msgType]
+	if !ok {
+		return fmt.Errorf("unkown msg type for dingtalk")
 	}
-
+	msg := payload2Msg(payload)
 	return s.bot.send(msg)
 }

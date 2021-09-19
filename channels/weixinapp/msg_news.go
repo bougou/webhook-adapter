@@ -6,10 +6,15 @@ import (
 )
 
 const (
-	maxArticlesNumber   int = 8
-	maxTitleBytes       int = 128
-	maxDescriptionBytes int = 512
+	maxArticlesNumber   int    = 8
+	maxTitleBytes       int    = 128
+	maxDescriptionBytes int    = 512
+	MsgTypeNews         string = "news"
 )
+
+func init() {
+	SupportedMsgtypes[MsgTypeNews] = NewMsgNewsFromPayload
+}
 
 type News struct {
 	Articles []*Article `json:"articles"` // 图文消息，一个图文消息支持1到8条图文
@@ -40,7 +45,7 @@ func (a *Article) SetPicURL(picURL string) *Article {
 }
 
 func NewMsgNews(articles []*Article) *Msg {
-	a := []*Article{}
+	var a []*Article
 
 	if len(articles) > 8 {
 		a = articles[:8]

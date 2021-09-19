@@ -2,6 +2,8 @@
 
 ## Currently Supported Webhooks
 
-- Weixin Group Bot
 - Dingtalk Group Bot
 - Feishu Group Bot
+- Slack Channel Bot
+- Weixin App
+- Weixin Group Bot

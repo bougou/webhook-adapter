@@ -10,14 +10,18 @@ import (
 	"io"
 	"mime/multipart"
 	"net/http"
+
+	"github.com/bougou/webhook-adapter/models"
 )
 
 const ChannelTypeFeishu = "feishu"
 
-var SupportedMsgtype = make(map[string]bool)
+type Payload2Msg func(payload *models.Payload) *Msg
+
+var SupportedMsgtypes = make(map[string]Payload2Msg)
 
 func ValidMsgtype(msgtype string) bool {
-	if _, exists := SupportedMsgtype[msgtype]; !exists {
+	if _, exists := SupportedMsgtypes[msgtype]; !exists {
 		return false
 	}
 	return true
@@ -153,7 +157,11 @@ func (bot *FeishuGroupBot) FetchImage(imageKey string) ([]byte, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to construct request")
 	}
-	req.URL.Query().Add("image_key", imageKey)
+
+	q := req.URL.Query()
+	q.Add("image_key", imageKey)
+	req.URL.RawQuery = q.Encode()
+
 	req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", bot.token))
 

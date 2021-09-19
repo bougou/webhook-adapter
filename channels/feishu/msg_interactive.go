@@ -5,6 +5,14 @@ import (
 	"github.com/bougou/webhook-adapter/models"
 )
 
+const (
+	MsgTypeInteractive = "interactive"
+)
+
+func init() {
+	SupportedMsgtypes[MsgTypeInteractive] = NewMsgInteractiveFromPayload
+}
+
 type Card struct {
 	Config       *CardConfig       `json:"config,omitempty"`
 	Header       *CardHeader       `json:"header,omitempty"`
@@ -42,41 +50,4 @@ func NewMsgInteractiveFromPayload(payload *models.Payload) *Msg {
 	card := &Card{}
 
 	return NewMsgCard(card)
-}
-
-func NewMsgMarkdownFromPayload(payload *models.Payload) *Msg {
-	card := NewCardMarkdown(payload.Title, payload.Markdown)
-
-	return NewMsgCard(card)
-}
-
-func NewCardMarkdown(title string, markdown string) *Card {
-	elements := []card.CardModule{}
-
-	// see: https://open.feishu.cn/document/ukTMukTMukTM/uADOwUjLwgDM14CM4ATN
-
-	// module := &card.ModuleDiv{
-	// 	Tag: "div",
-	// 	Text: &card.Text{
-	// 		Tag:     "lark_md",
-	// 		Content: markdown,
-	// 	},
-	// }
-
-	module := card.NewModuleMarkdown(markdown, nil)
-
-	elements = append(elements, module)
-
-	return &Card{
-		Config: &CardConfig{
-			EnableForward: false,
-		},
-		Header: &CardHeader{
-			Title: &card.Text{
-				Tag:     "plain_text",
-				Content: title,
-			},
-		},
-		Elements: elements,
-	}
 }

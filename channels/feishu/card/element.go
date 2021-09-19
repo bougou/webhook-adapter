@@ -18,7 +18,7 @@ type ElemImage struct {
 	Tag     string `json:"tag"` // tag=img
 	ImgKey  string `json:"img_key"`
 	Alt     *Text  `json:"alt"`
-	Preview bool   `json:"preview,omitemtpy"`
+	Preview bool   `json:"preview,omitempty"`
 }
 
 func (e *ElemImage) element() {

@@ -1,25 +1,5 @@
 package feishu
 
-const (
-	MsgTypeText        = "text"
-	MsgTypeImage       = "image"
-	MsgTypePost        = "post"
-	MsgTypeShareChat   = "sharechat"
-	MsgTypeInteractive = "interactive"
-
-	// Underlying, we use interactive to implement markdown
-	MsgTypeMarkdown = "markdown"
-)
-
-func init() {
-	SupportedMsgtype[MsgTypeText] = true        // 文本
-	SupportedMsgtype[MsgTypeImage] = true       // 图片
-	SupportedMsgtype[MsgTypePost] = true        // 富文本（文章）
-	SupportedMsgtype[MsgTypeShareChat] = true   // 群名片
-	SupportedMsgtype[MsgTypeInteractive] = true // 消息卡片
-	SupportedMsgtype[MsgTypeMarkdown] = true    // markdown 文本
-}
-
 type Msg struct {
 	// 开启签名验证后发送文本消息
 	// Timestamp time.Time `json:"timestamp,omitempty"`

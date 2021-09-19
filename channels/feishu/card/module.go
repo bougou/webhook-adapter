@@ -33,7 +33,7 @@ type ModuleImg struct {
 	Title   *Text  `json:"title"`
 	Mode    string `json:"mode,omitempty"` // 图片显示模式: crop_center：居中裁剪模式, fit_horizontal：平铺模式
 	Alt     *Text  `json:"text,omitempty"`
-	Preview bool   `json:"preview,omitemtpy"` // 点击后是否放大图片，缺省为true。在配置 card_link 后可设置为false，使用户点击卡片上的图片也能响应card_link链接跳转
+	Preview bool   `json:"preview,omitempty"` // 点击后是否放大图片，缺省为true。在配置 card_link 后可设置为false，使用户点击卡片上的图片也能响应card_link链接跳转
 }
 
 func (e *ModuleImg) cardModule() string {
@@ -55,7 +55,7 @@ func (e *ModuleNote) cardModule() string {
 type ModuleAction struct {
 	Tag     string          `json:"tag"`
 	Actions []ActionElement `json:"actions"`
-	Layout  string          `json:"layout,omitemtpy"` // bisected 为二等分布局, trisection 为三等分布局, flow 为流式布局元素会按自身大小横向排列并在空间不够的时候折行
+	Layout  string          `json:"layout,omitempty"` // bisected 为二等分布局, trisection 为三等分布局, flow 为流式布局元素会按自身大小横向排列并在空间不够的时候折行
 }
 
 func (e *ModuleAction) cardModule() string {

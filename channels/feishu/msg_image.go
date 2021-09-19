@@ -2,6 +2,14 @@ package feishu
 
 import "github.com/bougou/webhook-adapter/models"
 
+const (
+	MsgTypeImage = "image"
+)
+
+func init() {
+	SupportedMsgtypes[MsgTypeImage] = NewMsgImageFromPayload
+}
+
 func NewMsgImage(imageKey string) *Msg {
 	return &Msg{
 		MsgType: MsgTypeImage,

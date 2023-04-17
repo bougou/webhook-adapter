@@ -55,13 +55,18 @@ type Notifier struct {
 	tokenExpiredIn time.Duration
 }
 
-func NewNotifer(corpID string, agentID int, agentSecret string) *Notifier {
+// toUser,toParty,toTag CAN NOT be empty at the same time.
+func NewNotifer(corpID string, agentID int, agentSecret string, toUser string, toParty string, toTag string) *Notifier {
 	return &Notifier{
 		addr:        "https://qyapi.weixin.qq.com",
 		corpID:      corpID,
 		agentID:     agentID,
 		agentSecret: agentSecret,
 		client:      &http.Client{},
+
+		toUser:  toUser,
+		toParty: toParty,
+		toTag:   toTag,
 	}
 }
 

@@ -11,9 +11,9 @@ type Sender struct {
 	msgType string
 }
 
-func NewSender(corpID string, agentID int, agentSecret string, msgType string) *Sender {
+func NewSender(corpID string, agentID int, agentSecret string, msgType string, toUser string, toParty string, toTag string) *Sender {
 	return &Sender{
-		notifer: NewNotifer(corpID, agentID, agentSecret),
+		notifer: NewNotifer(corpID, agentID, agentSecret, toUser, toParty, toTag),
 		msgType: msgType,
 	}
 }

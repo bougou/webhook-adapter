@@ -134,7 +134,7 @@ func (n *Notifier) Send(msg *Msg) error {
 	msg.ToTag = n.toTag
 
 	if !msg.Valid() {
-		msg.ToUser = "@all"
+		return fmt.Errorf("toUser,toParty,toTag CAN NOT be empty at the same time")
 	}
 
 	if n.token == "" {

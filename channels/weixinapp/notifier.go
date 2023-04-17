@@ -32,12 +32,23 @@ var ErrCodeAboutTokens = []int{
 	42001, // access_token已过期
 }
 
+// https://developer.work.weixin.qq.com/document/path/90236
 type Notifier struct {
 	addr        string
 	corpID      string // 企业ID
 	agentID     int    // 应用ID
 	agentSecret string // 应用的凭证密钥, 区分应用
 	client      *http.Client
+
+	// toUser 指定接收消息的成员，成员 ID 列表（多个接收者用 '|' 分隔，最多支持 1000 个）。
+	// 指定为 "@all"，则向该企业应用的全部成员发送
+	toUser string
+	// toParty 指定接收消息的部门，部门 ID 列表，多个接收者用 '|' 分隔，最多支持 100 个。
+	// 当 touser 为 "@all" 时忽略本参数
+	toParty string
+	// toTag 指定接收消息的标签，标签ID列表，多个接收者用 '|' 分隔，最多支持 100 个。
+	// 当 touser 为 "@all" 时忽略本参数
+	toTag string
 
 	token          string
 	tokenAt        time.Time
@@ -118,6 +129,9 @@ func (n *Notifier) ShouldGetToken() bool {
 func (n *Notifier) Send(msg *Msg) error {
 	// fill agentID
 	msg.AgentID = n.agentID
+	msg.ToUser = n.toUser
+	msg.ToParty = n.toParty
+	msg.ToTag = n.toTag
 
 	if !msg.Valid() {
 		msg.ToUser = "@all"

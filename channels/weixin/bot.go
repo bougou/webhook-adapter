@@ -72,6 +72,25 @@ func (bot *WeixinGroupBot) Send(msg *Msg) error {
 		return fmt.Errorf("send msg response error, status: %d", res.StatusCode)
 	}
 
+	type WeixinGroupBotResponse struct {
+		Errcode int    `json:"errcode,omitempty"`
+		Errmsg  string `json:"errmsg,omitempty"`
+	}
+
+	resBody, err := io.ReadAll(res.Body)
+	if err != nil {
+		return fmt.Errorf("read res body failed, err: %s", err)
+	}
+
+	botRes := &WeixinGroupBotResponse{}
+	if err := json.Unmarshal(resBody, botRes); err != nil {
+		return fmt.Errorf("marshal to WeixinGroupBotResponse failed, err: %s", err)
+	}
+
+	if botRes.Errcode != 0 {
+		return fmt.Errorf("bot request failed, err: %s", string(resBody))
+	}
+
 	return nil
 }
 

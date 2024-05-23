@@ -88,7 +88,7 @@ func (bot *WeixinGroupBot) Send(msg *Msg) error {
 	}
 
 	if botRes.Errcode != 0 {
-		return fmt.Errorf("bot request failed, err: %s", string(resBody))
+		return fmt.Errorf("found err in response, request url: (%s), response: %s", bot.Addr(), string(resBody))
 	}
 
 	return nil

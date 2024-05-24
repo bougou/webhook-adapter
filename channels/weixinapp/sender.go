@@ -41,16 +41,6 @@ func (s *Sender) SendMsgT(msgType string, msgSource interface{}) error {
 		return fmt.Errorf("passed msgSource is not type *weixinapp.Msg")
 	}
 
-	switch msgType {
-	case MsgTypeFile:
-	case MsgTypeImage:
-	case MsgTypeMarkdown:
-	case MsgTypeNews:
-	case MsgTypeText:
-	default:
-		return fmt.Errorf("unsupported msgtype of (%s)", msgType)
-	}
-
 	if err := ValidMsg(msgType, msg); err != nil {
 		return fmt.Errorf("valid msg failed, err: %s", err)
 	}

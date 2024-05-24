@@ -21,10 +21,3 @@ type Msg []slack.Block
 func ValidMsg(msgType string, msg *Msg) error {
 	return nil
 }
-
-func ValidMsgtype(msgtype string) bool {
-	if _, exists := Payload2MsgFnMap[msgtype]; !exists {
-		return false
-	}
-	return true
-}

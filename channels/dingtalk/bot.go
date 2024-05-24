@@ -8,8 +8,6 @@ import (
 	"mime/multipart"
 	"net/http"
 	"time"
-
-	"github.com/bougou/webhook-adapter/models"
 )
 
 // DingtalkBot can send messages to dingtalk group
@@ -34,18 +32,6 @@ func (bot *DingtalkGroupBot) Addr() string {
 
 func (bot *DingtalkGroupBot) AddrForUpload() string {
 	return fmt.Sprintf("%s/robot/upload_media?key=%s&type=file", bot.addr, bot.access_token)
-}
-
-func (bot *DingtalkGroupBot) SendAs(m *models.Payload, msgType string) error {
-	if !ValidMsgtype(msgType) {
-		return fmt.Errorf("can not recognize msg type")
-	}
-
-	switch msgType {
-	case "text":
-	}
-	return nil
-
 }
 
 func (bot *DingtalkGroupBot) Send(msg *Msg) error {

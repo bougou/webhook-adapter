@@ -1,6 +1,10 @@
 package weixin
 
-import "github.com/bougou/webhook-adapter/models"
+import (
+	"fmt"
+
+	"github.com/bougou/webhook-adapter/models"
+)
 
 const (
 	ChannelTypeWeixin string = "weixin"
@@ -39,14 +43,19 @@ type Payload2MsgFn func(payload *models.Payload) *Msg
 
 var Payload2MsgFnMap = make(map[string]Payload2MsgFn)
 
-func ValidMsgtype(msgtype string) bool {
-	if _, exists := Payload2MsgFnMap[msgtype]; !exists {
-		return false
+func ValidMsg(msgType string, msg *Msg) error {
+	if msg.MsgType != msgType {
+		return fmt.Errorf("the msg does not match with specified msgType")
 	}
 
-	return true
-}
-
-func ValidMsg(msgType string, msg *Msg) error {
+	switch msgType {
+	case MsgTypeFile:
+	case MsgTypeImage:
+	case MsgTypeMarkdown:
+	case MsgTypeNews:
+	case MsgTypeText:
+	default:
+		return fmt.Errorf("unsupported msgtype of (%s)", msgType)
+	}
 	return nil
 }

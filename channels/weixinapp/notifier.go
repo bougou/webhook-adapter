@@ -121,8 +121,8 @@ func (n *Notifier) Send(msg *Msg) error {
 	msg.ToParty = n.toParty
 	msg.ToTag = n.toTag
 
-	if !msg.Valid() {
-		return fmt.Errorf("toUser,toParty,toTag CAN NOT be empty at the same time")
+	if err := ValidMsg(msg.MsgType, msg); err != nil {
+		return fmt.Errorf("valid msg failed, err: %s", err)
 	}
 
 	if n.token == "" {

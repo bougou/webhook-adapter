@@ -1,6 +1,10 @@
 package feishu
 
-import "github.com/bougou/webhook-adapter/models"
+import (
+	"fmt"
+
+	"github.com/bougou/webhook-adapter/models"
+)
 
 const (
 	ChannelTypeFeishu string = "feishu"
@@ -34,17 +38,14 @@ type Content struct {
 	ShareChatID string `json:"share_chat_id,omitempty"`
 }
 
-func ValidMsg(msgType string, msg *Msg) error {
-	return nil
-}
-
 type Payload2MsgFn func(payload *models.Payload) *Msg
 
 var Payload2MsgFnMap = make(map[string]Payload2MsgFn)
 
-func ValidMsgtype(msgtype string) bool {
-	if _, exists := Payload2MsgFnMap[msgtype]; !exists {
-		return false
+func ValidMsg(msgType string, msg *Msg) error {
+	if msg.MsgType != msgType {
+		return fmt.Errorf("the msg does not match with specified msgType")
 	}
-	return true
+
+	return nil
 }

@@ -1,6 +1,10 @@
 package dingtalk
 
-import "github.com/bougou/webhook-adapter/models"
+import (
+	"fmt"
+
+	"github.com/bougou/webhook-adapter/models"
+)
 
 const (
 	ChannelTypeDingtalk string = "dingtalk"
@@ -62,12 +66,8 @@ func (msg *Msg) WithAtMobiles(mobiles []string) *Msg {
 }
 
 func ValidMsg(msgType string, msg *Msg) error {
-	return nil
-}
-
-func ValidMsgtype(msgtype string) bool {
-	if _, exists := Payload2MsgFnMap[msgtype]; !exists {
-		return false
+	if msg.MsgType != msgType {
+		return fmt.Errorf("the msg does not match with specified msgType")
 	}
-	return true
+	return nil
 }

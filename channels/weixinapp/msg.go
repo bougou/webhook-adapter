@@ -1,6 +1,10 @@
 package weixinapp
 
-import "github.com/bougou/webhook-adapter/models"
+import (
+	"fmt"
+
+	"github.com/bougou/webhook-adapter/models"
+)
 
 // 企业微信 - 应用
 
@@ -65,20 +69,24 @@ type Msg struct {
 	DuplicateCheckInterval int `json:"duplicate_check_interval,omitempty"`
 }
 
-func (msg *Msg) Valid() bool {
-	if msg.ToUser == "" && msg.ToParty == "" && msg.ToTag == "" {
-		return false
-	}
-
-	return true
-}
-
 func ValidMsg(msgType string, msg *Msg) error {
-	return nil
-}
-func ValidMsgtype(msgtype string) bool {
-	if _, exists := Payload2MsgFnMap[msgtype]; !exists {
-		return false
+	if msg.MsgType != msgType {
+		return fmt.Errorf("the msg does not match with specified msgType")
 	}
-	return true
+
+	switch msgType {
+	case MsgTypeFile:
+	case MsgTypeImage:
+	case MsgTypeMarkdown:
+	case MsgTypeNews:
+	case MsgTypeText:
+	default:
+		return fmt.Errorf("unsupported msgtype of (%s)", msgType)
+	}
+
+	if msg.ToUser == "" && msg.ToParty == "" && msg.ToTag == "" {
+		return fmt.Errorf("toUser,toParty,toTag CAN NOT be empty at the same time")
+	}
+
+	return nil
 }

@@ -2,12 +2,8 @@ package weixinapp
 
 import "github.com/bougou/webhook-adapter/models"
 
-const (
-	MsgTypeMiniprogramNotice = "miniprogram_notice"
-)
-
 func init() {
-	SupportedMsgtypes[MsgTypeMiniprogramNotice] = NewMsgMiniprogramNoticeFromPayload
+	Payload2MsgFnMap[MsgTypeMiniProgramNotice] = NewMsgMiniprogramNoticeFromPayload
 }
 
 type MiniprogramNotice struct {

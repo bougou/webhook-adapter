@@ -1,5 +1,45 @@
 package weixinapp
 
+import "github.com/bougou/webhook-adapter/models"
+
+// 企业微信 - 应用
+
+const ChannelTypeWeixin = "weixinapp"
+
+const (
+	MsgTypeFile string = "file"
+
+	MsgTypeImage string = "image"
+
+	MsgTypeInteractiveCard string = "interactive_card"
+
+	MsgTypeMarkdown  string = "markdown"
+	maxMarkdownBytes int    = 2048
+	truncatedMark    string = "\n... more is truncated due to limit"
+	// see: https://work.weixin.qq.com/api/doc/90000/90135/90236#markdown%E6%B6%88%E6%81%AF
+
+	MsgTypeMiniProgramNotice string = "miniprogram_notice"
+
+	MsgTypeMPNews string = "mpnews"
+
+	MsgTypeNews         string = "news"
+	maxArticlesNumber   int    = 8
+	maxTitleBytes       int    = 128
+	maxDescriptionBytes int    = 512
+
+	MsgTypeText string = "text"
+
+	MsgTypeTextCard string = "textcard"
+
+	MsgTypeVideo string = "video"
+
+	MsgTypeVoice string = "voice"
+)
+
+type Payload2MsgFn func(payload *models.Payload) *Msg
+
+var Payload2MsgFnMap = make(map[string]Payload2MsgFn)
+
 type Msg struct {
 	MsgType string `json:"msgtype"`
 	AgentID int    `json:"agentid"`
@@ -30,5 +70,15 @@ func (msg *Msg) Valid() bool {
 		return false
 	}
 
+	return true
+}
+
+func ValidMsg(msgType string, msg *Msg) error {
+	return nil
+}
+func ValidMsgtype(msgtype string) bool {
+	if _, exists := Payload2MsgFnMap[msgtype]; !exists {
+		return false
+	}
 	return true
 }

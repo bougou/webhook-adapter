@@ -5,12 +5,8 @@ import (
 	"github.com/bougou/webhook-adapter/models"
 )
 
-const (
-	MsgTypeInteractive = "interactive"
-)
-
 func init() {
-	SupportedMsgtypes[MsgTypeInteractive] = NewMsgInteractiveFromPayload
+	Payload2MsgFnMap[MsgTypeInteractive] = NewMsgInteractiveFromPayload
 }
 
 type Card struct {
@@ -38,7 +34,7 @@ type I18NElements struct {
 	JAJP []card.CardModule `json:"jn_jp"`
 }
 
-func NewMsgCard(card *Card) *Msg {
+func NewMsgInteractive(card *Card) *Msg {
 	return &Msg{
 		MsgType: MsgTypeInteractive,
 		Card:    card,
@@ -48,6 +44,5 @@ func NewMsgCard(card *Card) *Msg {
 func NewMsgInteractiveFromPayload(payload *models.Payload) *Msg {
 	// Todo, construct card from payload
 	card := &Card{}
-
-	return NewMsgCard(card)
+	return NewMsgInteractive(card)
 }

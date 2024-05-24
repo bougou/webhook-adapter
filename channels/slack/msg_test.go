@@ -13,8 +13,11 @@ func Test_SlackSender2(t *testing.T) {
 	channel := "#jenkins-ci"
 	fmt.Println("slack token:", token)
 	sender := NewSender(token, channel, MsgTypeMarkdown)
-	msg := createSlackBlocks()
-	sender.bot.send(msg)
+	blocks := createSlackBlocks()
+	msg := Msg(blocks)
+	if err := sender.SendMsg(msg); err != nil {
+		t.Error(err)
+	}
 }
 
 // slack.Block(s) can be used saas slack.MsgOption(s)

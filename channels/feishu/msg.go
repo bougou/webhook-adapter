@@ -1,5 +1,18 @@
 package feishu
 
+import "github.com/bougou/webhook-adapter/models"
+
+const (
+	ChannelTypeFeishu string = "feishu"
+
+	MsgTypeImage       string = "image"
+	MsgTypeInteractive string = "interactive"
+	MsgTypeMarkdown    string = "markdown" // Underlying, we use interactive msg type to implement markdown
+	MsgTypePost        string = "post"
+	MsgTypeShareChat   string = "sharechat"
+	MsgTypeText        string = "text"
+)
+
 type Msg struct {
 	// 开启签名验证后发送文本消息
 	// Timestamp time.Time `json:"timestamp,omitempty"`
@@ -19,4 +32,19 @@ type Content struct {
 	ImageKey    string `json:"image,omitempty"`
 	Post        *Post  `json:"post,omitempty"`
 	ShareChatID string `json:"share_chat_id,omitempty"`
+}
+
+func ValidMsg(msgType string, msg *Msg) error {
+	return nil
+}
+
+type Payload2MsgFn func(payload *models.Payload) *Msg
+
+var Payload2MsgFnMap = make(map[string]Payload2MsgFn)
+
+func ValidMsgtype(msgtype string) bool {
+	if _, exists := Payload2MsgFnMap[msgtype]; !exists {
+		return false
+	}
+	return true
 }

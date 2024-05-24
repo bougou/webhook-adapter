@@ -2,12 +2,8 @@ package dingtalk
 
 import "github.com/bougou/webhook-adapter/models"
 
-const (
-	MsgTypeActionCard = "actioncard"
-)
-
 func init() {
-	SupportedMsgtypes[MsgTypeActionCard] = NewMsgActionCardFromPayload
+	Payload2MsgFnMap[MsgTypeActionCard] = NewMsgActionCardFromPayload
 }
 
 type ActionCard struct {
@@ -20,10 +16,6 @@ type ActionCard struct {
 	Singleurl   string `json:"singleURL,omitempty"`
 
 	Btns []*Btn `json:"btns,omitempty"`
-}
-
-func (*ActionCard) dingTalkMsgtype() string {
-	return MsgTypeActionCard
 }
 
 type Btn struct {

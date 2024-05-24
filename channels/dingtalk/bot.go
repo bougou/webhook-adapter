@@ -12,19 +12,6 @@ import (
 	"github.com/bougou/webhook-adapter/models"
 )
 
-const ChannelTypeDingtalk = "dingtalk"
-
-type Payload2Msg func(payload *models.Payload) *Msg
-
-var SupportedMsgtypes = make(map[string]Payload2Msg)
-
-func ValidMsgtype(msgtype string) bool {
-	if _, exists := SupportedMsgtypes[msgtype]; !exists {
-		return false
-	}
-	return true
-}
-
 // DingtalkBot can send messages to dingtalk group
 // ref: https://developers.dingtalk.com/document/app/message-types-and-data-format
 type DingtalkGroupBot struct {
@@ -61,7 +48,7 @@ func (bot *DingtalkGroupBot) SendAs(m *models.Payload, msgType string) error {
 
 }
 
-func (bot *DingtalkGroupBot) send(msg *Msg) error {
+func (bot *DingtalkGroupBot) Send(msg *Msg) error {
 	msgBytes, err := json.Marshal(msg)
 	if err != nil {
 		return err

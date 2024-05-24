@@ -5,12 +5,8 @@ import (
 	"github.com/slack-go/slack"
 )
 
-const (
-	MsgTypeText = "text"
-)
-
 func init() {
-	SupportedMsgtypes[MsgTypeText] = NewMsgTextFromPayload
+	Payload2MsgFnMap[MsgTypeText] = NewMsgTextFromPayload
 
 }
 func NewMsgTextFromPayload(payload *models.Payload) Msg {

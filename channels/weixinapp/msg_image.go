@@ -2,12 +2,8 @@ package weixinapp
 
 import "github.com/bougou/webhook-adapter/models"
 
-const (
-	MsgTypeImage = "image"
-)
-
 func init() {
-	SupportedMsgtypes[MsgTypeImage] = NewMsgImageFromPayload
+	Payload2MsgFnMap[MsgTypeImage] = NewMsgImageFromPayload
 }
 
 type Image struct {

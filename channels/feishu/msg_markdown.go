@@ -5,19 +5,18 @@ import (
 	"github.com/bougou/webhook-adapter/models"
 )
 
-const (
-	// Underlying, we use interactive msg type to implement markdown
-	MsgTypeMarkdown = "markdown"
-)
-
 func init() {
-	SupportedMsgtypes[MsgTypeMarkdown] = NewMsgMarkdownFromPayload
+	Payload2MsgFnMap[MsgTypeMarkdown] = NewMsgMarkdownFromPayload
+}
+
+func NewMsgMarkdown(title string, markdown string) *Msg {
+	card := NewCardMarkdown(title, markdown)
+	return NewMsgInteractive(card)
 }
 
 func NewMsgMarkdownFromPayload(payload *models.Payload) *Msg {
 	card := NewCardMarkdown(payload.Title, payload.Markdown)
-
-	return NewMsgCard(card)
+	return NewMsgInteractive(card)
 }
 
 func NewCardMarkdown(title string, markdown string) *Card {

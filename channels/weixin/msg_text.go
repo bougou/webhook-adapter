@@ -5,14 +5,8 @@ import (
 	"github.com/bougou/webhook-adapter/utils"
 )
 
-const maxTextBytes int = 2048
-
-const (
-	MsgTypeText = "text"
-)
-
 func init() {
-	SupportedMsgtypes[MsgTypeText] = NewMsgTextFromPayload
+	Payload2MsgFnMap[MsgTypeText] = NewMsgTextFromPayload
 }
 
 type Text struct {

@@ -2,20 +2,12 @@ package dingtalk
 
 import "github.com/bougou/webhook-adapter/models"
 
-const (
-	MsgTypeText = "text"
-)
-
 func init() {
-	SupportedMsgtypes[MsgTypeText] = NewMsgTextFromPayload
+	Payload2MsgFnMap[MsgTypeText] = NewMsgTextFromPayload
 }
 
 type Text struct {
 	Content string `json:"content"`
-}
-
-func (*Text) dingTalkMsgtype() string {
-	return MsgTypeText
 }
 
 func NewText(content string) *Text {
@@ -33,7 +25,7 @@ func (bot *DingtalkGroupBot) SendText(content string, atMobiles []string, atAll 
 	text := NewText(content)
 	msg := NewMsgText(text)
 	msg.WithAtAll(atAll).WithAtMobiles(atMobiles)
-	return bot.send(msg)
+	return bot.Send(msg)
 }
 
 func NewMsgTextFromPayload(payload *models.Payload) *Msg {

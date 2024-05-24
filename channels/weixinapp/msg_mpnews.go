@@ -2,12 +2,8 @@ package weixinapp
 
 import "github.com/bougou/webhook-adapter/models"
 
-const (
-	MsgTypeMPNews = "mpnews"
-)
-
 func init() {
-	SupportedMsgtypes[MsgTypeMPNews] = NewMsgMPNewsFromPayload
+	Payload2MsgFnMap[MsgTypeMPNews] = NewMsgMPNewsFromPayload
 }
 
 type MPNews struct {

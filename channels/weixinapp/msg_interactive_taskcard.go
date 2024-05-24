@@ -2,12 +2,8 @@ package weixinapp
 
 import "github.com/bougou/webhook-adapter/models"
 
-const (
-	MsgTypeInteractiveCard = "interactive_card"
-)
-
 func init() {
-	SupportedMsgtypes[MsgTypeInteractiveCard] = NewMsgInteractiveCardFromPayload
+	Payload2MsgFnMap[MsgTypeInteractiveCard] = NewMsgInteractiveCardFromPayload
 }
 
 type InteractiveTaskcard struct {

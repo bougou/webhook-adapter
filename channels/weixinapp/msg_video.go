@@ -2,12 +2,8 @@ package weixinapp
 
 import "github.com/bougou/webhook-adapter/models"
 
-const (
-	MsgTypeVideo = "video"
-)
-
 func init() {
-	SupportedMsgtypes[MsgTypeVideo] = NewMsgVideoFromPayload
+	Payload2MsgFnMap[MsgTypeVideo] = NewMsgVideoFromPayload
 }
 
 type Video struct {

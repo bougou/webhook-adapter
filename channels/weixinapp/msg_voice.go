@@ -2,12 +2,8 @@ package weixinapp
 
 import "github.com/bougou/webhook-adapter/models"
 
-const (
-	MsgTypeVoice = "voice"
-)
-
 func init() {
-	SupportedMsgtypes[MsgTypeVoice] = NewMsgVoiceFromPayload
+	Payload2MsgFnMap[MsgTypeVoice] = NewMsgVoiceFromPayload
 }
 
 type Voice struct {

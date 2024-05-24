@@ -2,12 +2,8 @@ package feishu
 
 import "github.com/bougou/webhook-adapter/models"
 
-const (
-	MsgTypePost = "post"
-)
-
 func init() {
-	SupportedMsgtypes[MsgTypePost] = NewMsgPostFromPayload
+	Payload2MsgFnMap[MsgTypePost] = NewMsgPostFromPayload
 }
 
 type Post struct {

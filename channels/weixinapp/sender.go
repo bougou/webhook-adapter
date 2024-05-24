@@ -11,7 +11,11 @@ type Sender struct {
 	msgType string
 }
 
-func NewSender(corpID string, agentID int, agentSecret string, msgType string, toUser string, toParty string, toTag string) *Sender {
+func NewSender(corpID string, agentID int, agentSecret string, msgType string, toUser string, toParty string, toTag string) models.Sender {
+	return newSender(corpID, agentID, agentSecret, msgType, toUser, toParty, toTag)
+}
+
+func newSender(corpID string, agentID int, agentSecret string, msgType string, toUser string, toParty string, toTag string) *Sender {
 	return &Sender{
 		notifer: NewNotifer(corpID, agentID, agentSecret, toUser, toParty, toTag),
 		msgType: msgType,
@@ -19,10 +23,37 @@ func NewSender(corpID string, agentID int, agentSecret string, msgType string, t
 }
 
 func (s *Sender) Send(payload *models.Payload) error {
-	payload2Msg, ok := SupportedMsgtypes[s.msgType]
+	payload2Msg, ok := Payload2MsgFnMap[s.msgType]
 	if !ok {
 		return fmt.Errorf("unkown msg type")
 	}
 	msg := payload2Msg(payload)
+	return s.SendMsg(msg)
+}
+
+func (s *Sender) SendMsg(msgSource interface{}) error {
+	return s.SendMsgT(s.msgType, msgSource)
+}
+
+func (s *Sender) SendMsgT(msgType string, msgSource interface{}) error {
+	msg, ok := msgSource.(*Msg)
+	if !ok {
+		return fmt.Errorf("passed msgSource is not type *weixinapp.Msg")
+	}
+
+	switch msgType {
+	case MsgTypeFile:
+	case MsgTypeImage:
+	case MsgTypeMarkdown:
+	case MsgTypeNews:
+	case MsgTypeText:
+	default:
+		return fmt.Errorf("unsupported msgtype of (%s)", msgType)
+	}
+
+	if err := ValidMsg(msgType, msg); err != nil {
+		return fmt.Errorf("valid msg failed, err: %s", err)
+	}
+
 	return s.notifer.Send(msg)
 }

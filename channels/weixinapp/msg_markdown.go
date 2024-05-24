@@ -8,15 +8,8 @@ import (
 	"github.com/bougou/webhook-adapter/utils"
 )
 
-const (
-	maxMarkdownBytes int = 2048
-	truncatedMark        = "\n... more is truncated due to limit"
-	// see: https://work.weixin.qq.com/api/doc/90000/90135/90236#markdown%E6%B6%88%E6%81%AF
-	MsgTypeMarkdown = "markdown"
-)
-
 func init() {
-	SupportedMsgtypes[MsgTypeMarkdown] = NewMsgMarkdownFromPayload
+	Payload2MsgFnMap[MsgTypeMarkdown] = NewMsgMarkdownFromPayload
 }
 
 type Markdown struct {

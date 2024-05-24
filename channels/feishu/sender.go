@@ -11,7 +11,7 @@ type Sender struct {
 	msgType string
 }
 
-func NewSender(token string, msgType string) *Sender {
+func NewSender(token string, msgType string) models.Sender {
 	if msgType == "" {
 		msgType = MsgTypeMarkdown
 	}
@@ -23,10 +23,27 @@ func NewSender(token string, msgType string) *Sender {
 }
 
 func (s *Sender) Send(payload *models.Payload) error {
-	payload2Msg, ok := SupportedMsgtypes[s.msgType]
+	payload2Msg, ok := Payload2MsgFnMap[s.msgType]
 	if !ok {
 		return fmt.Errorf("unkown msg type for feishu")
 	}
 	msg := payload2Msg(payload)
+	return s.SendMsg(msg)
+}
+
+func (s *Sender) SendMsg(msgSource interface{}) error {
+	return s.SendMsgT(s.msgType, msgSource)
+}
+
+func (s *Sender) SendMsgT(msgType string, msgSource interface{}) error {
+	msg, ok := msgSource.(*Msg)
+	if !ok {
+		return fmt.Errorf("passed msgSource is not type *feishu.Msg")
+	}
+
+	if err := ValidMsg(msgType, msg); err != nil {
+		return fmt.Errorf("valid msg failed, err: %s", err)
+	}
+
 	return s.bot.Send(msg)
 }

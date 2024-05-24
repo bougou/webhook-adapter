@@ -1,5 +1,21 @@
 package dingtalk
 
+import "github.com/bougou/webhook-adapter/models"
+
+const (
+	ChannelTypeDingtalk string = "dingtalk"
+
+	MsgTypeActionCard string = "actioncard"
+	MsgTypeFeedCard   string = "feedcard"
+	MsgTypeLink       string = "link"
+	MsgTypeMarkdown   string = "markdown"
+	MsgTypeText       string = "text"
+)
+
+type Payload2MsgFn func(payload *models.Payload) *Msg
+
+var Payload2MsgFnMap = make(map[string]Payload2MsgFn)
+
 type Msg struct {
 	MsgType    string      `json:"msgtype"`
 	Text       *Text       `json:"text,omitempty"`
@@ -43,4 +59,15 @@ func (msg *Msg) WithAtMobiles(mobiles []string) *Msg {
 	}
 	msg.At.AtMobiles = mobiles
 	return msg
+}
+
+func ValidMsg(msgType string, msg *Msg) error {
+	return nil
+}
+
+func ValidMsgtype(msgtype string) bool {
+	if _, exists := Payload2MsgFnMap[msgtype]; !exists {
+		return false
+	}
+	return true
 }

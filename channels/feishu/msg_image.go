@@ -2,12 +2,8 @@ package feishu
 
 import "github.com/bougou/webhook-adapter/models"
 
-const (
-	MsgTypeImage = "image"
-)
-
 func init() {
-	SupportedMsgtypes[MsgTypeImage] = NewMsgImageFromPayload
+	Payload2MsgFnMap[MsgTypeImage] = NewMsgImageFromPayload
 }
 
 func NewMsgImage(imageKey string) *Msg {
@@ -20,7 +16,6 @@ func NewMsgImage(imageKey string) *Msg {
 }
 
 func (bot *FeishuGroupBot) SendImage(imageKey string) error {
-
 	msg := NewMsgImage(imageKey)
 	return bot.Send(msg)
 }

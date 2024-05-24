@@ -6,24 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"time"
-
-	"github.com/bougou/webhook-adapter/models"
 )
-
-// 企业微信 - 应用
-
-const ChannelTypeWeixin = "weixinapp"
-
-type Payload2Msg func(payload *models.Payload) *Msg
-
-var SupportedMsgtypes = make(map[string]Payload2Msg)
-
-func ValidMsgtype(msgtype string) bool {
-	if _, exists := SupportedMsgtypes[msgtype]; !exists {
-		return false
-	}
-	return true
-}
 
 // ErrCodeAboutTokens contains weixinapp
 // https://work.weixin.qq.com/api/doc/90000/90139/90313

@@ -8,23 +8,7 @@ import (
 	"mime/multipart"
 	"net/http"
 	"time"
-
-	"github.com/bougou/webhook-adapter/models"
 )
-
-const ChannelTypeWeixin = "weixin"
-
-type Payload2Msg func(payload *models.Payload) *Msg
-
-var SupportedMsgtypes = make(map[string]Payload2Msg)
-
-func ValidMsgtype(msgtype string) bool {
-	if _, exists := SupportedMsgtypes[msgtype]; !exists {
-		return false
-	}
-
-	return true
-}
 
 // WexinGroupBot can send messages to weixin group
 // ref: https://work.weixin.qq.com/api/doc/90000/90136/91770

@@ -2,12 +2,8 @@ package dingtalk
 
 import "github.com/bougou/webhook-adapter/models"
 
-const (
-	MsgTypeLink = "link"
-)
-
 func init() {
-	SupportedMsgtypes[MsgTypeLink] = NewMsgLinkFromPayload
+	Payload2MsgFnMap[MsgTypeLink] = NewMsgLinkFromPayload
 }
 
 type Link struct {
@@ -15,10 +11,6 @@ type Link struct {
 	Title      string `json:"title"`
 	PicURL     string `json:"picUrl"`
 	MessageURL string `json:"messageUrl"`
-}
-
-func (*Link) dingTalkMsgtype() string {
-	return MsgTypeLink
 }
 
 func NewLink(title string, text string, messageURL string) *Link {

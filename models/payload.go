@@ -1,5 +1,7 @@
 package models
 
+// The purpse of Payload is to hide the complexity of constructing channel-specific Msg.
+// Because each specific channel provides suitable Payload2MsgFn(s) convertion functions for its supported msgType(s).
 type Payload struct {
 	Raw      string   `json:"raw"`
 	Title    string   `json:"title"`

@@ -5,12 +5,8 @@ import (
 	"github.com/slack-go/slack"
 )
 
-const (
-	MsgTypeMarkdown = "markdown"
-)
-
 func init() {
-	SupportedMsgtypes[MsgTypeMarkdown] = NewMsgMarkdownFromPayload
+	Payload2MsgFnMap[MsgTypeMarkdown] = NewMsgMarkdownFromPayload
 }
 
 // Slack support only a small set of markdown syntax.

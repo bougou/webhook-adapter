@@ -5,15 +5,8 @@ import (
 	"github.com/bougou/webhook-adapter/utils"
 )
 
-const (
-	maxArticlesNumber   int    = 8
-	maxTitleBytes       int    = 128
-	maxDescriptionBytes int    = 512
-	MsgTypeNews         string = "news"
-)
-
 func init() {
-	SupportedMsgtypes[MsgTypeNews] = NewMsgNewsFromPayload
+	Payload2MsgFnMap[MsgTypeNews] = NewMsgNewsFromPayload
 }
 
 type News struct {

@@ -5,22 +5,18 @@ import (
 	"github.com/bougou/webhook-adapter/utils"
 )
 
-const (
-	maxArticlesNumber   int = 8
-	maxTitleBytes       int = 128
-	maxDescriptionBytes int = 512
-)
-
-const (
-	MsgTypeNews = "news"
-)
-
 func init() {
-	SupportedMsgtypes[MsgTypeNews] = NewMsgNewsFromPayload
+	Payload2MsgFnMap[MsgTypeNews] = NewMsgNewsFromPayload
 }
 
 type News struct {
 	Articles []*Article `json:"articles"` // 图文消息，一个图文消息支持1到8条图文
+}
+
+func NewNews(articles []*Article) *News {
+	return &News{
+		Articles: articles,
+	}
 }
 
 type Article struct {
@@ -47,7 +43,14 @@ func (a *Article) SetPicURL(picURL string) *Article {
 	return a
 }
 
-func NewMsgNews(articles []*Article) *Msg {
+func NewMsgNews(news *News) *Msg {
+	return &Msg{
+		MsgType: MsgTypeNews,
+		News:    news,
+	}
+}
+
+func NewMsgNewsFromArticles(articles []*Article) *Msg {
 	var a []*Article
 
 	if len(articles) > 8 {
@@ -68,5 +71,5 @@ func NewMsgNews(articles []*Article) *Msg {
 func NewMsgNewsFromPayload(payload *models.Payload) *Msg {
 	// Todo, construct articles from payload
 	articles := []*Article{}
-	return NewMsgNews(articles)
+	return NewMsgNewsFromArticles(articles)
 }

@@ -10,22 +10,7 @@ import (
 	"io"
 	"mime/multipart"
 	"net/http"
-
-	"github.com/bougou/webhook-adapter/models"
 )
-
-const ChannelTypeFeishu = "feishu"
-
-type Payload2Msg func(payload *models.Payload) *Msg
-
-var SupportedMsgtypes = make(map[string]Payload2Msg)
-
-func ValidMsgtype(msgtype string) bool {
-	if _, exists := SupportedMsgtypes[msgtype]; !exists {
-		return false
-	}
-	return true
-}
 
 // FeishuBot can send messages to feishu group
 // ref: https://www.feishu.cn/hc/zh-CN/articles/360024984973

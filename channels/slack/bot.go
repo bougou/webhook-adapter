@@ -4,22 +4,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/bougou/webhook-adapter/models"
 	"github.com/slack-go/slack"
 )
-
-const ChannelTypeSlack = "slack"
-
-type Payload2Msg func(payload *models.Payload) Msg
-
-var SupportedMsgtypes = make(map[string]Payload2Msg)
-
-func ValidMsgtype(msgtype string) bool {
-	if _, exists := SupportedMsgtypes[msgtype]; !exists {
-		return false
-	}
-	return true
-}
 
 // SlackBot can send messages to slack channel
 type SlackBot struct {
@@ -38,7 +24,7 @@ func NewSlackBot(token string, channel string) *SlackBot {
 	}
 }
 
-func (s *SlackBot) send(msg Msg) error {
+func (s *SlackBot) Send(msg Msg) error {
 	if _, err := s.client.AuthTest(); err != nil {
 		msg := fmt.Sprintf("slack auth failed, err: %s", err)
 		return errors.New(msg)

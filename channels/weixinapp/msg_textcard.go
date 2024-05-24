@@ -2,12 +2,8 @@ package weixinapp
 
 import "github.com/bougou/webhook-adapter/models"
 
-const (
-	MsgTypeTextCard = "textcard"
-)
-
 func init() {
-	SupportedMsgtypes[MsgTypeTextCard] = NewMsgTextCardFromPayload
+	Payload2MsgFnMap[MsgTypeTextCard] = NewMsgTextCardFromPayload
 }
 
 type TextCard struct {

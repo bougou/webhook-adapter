@@ -2,12 +2,8 @@ package weixinapp
 
 import "github.com/bougou/webhook-adapter/models"
 
-const (
-	MsgTypeFile = "file"
-)
-
 func init() {
-	SupportedMsgtypes[MsgTypeFile] = NewMsgFileFromPayload
+	Payload2MsgFnMap[MsgTypeFile] = NewMsgFileFromPayload
 }
 
 type File struct {

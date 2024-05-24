@@ -11,7 +11,11 @@ type Sender struct {
 	msgType string
 }
 
-func NewSender(key string, msgType string) *Sender {
+func NewSender(key string, msgType string) models.Sender {
+	return newSender(key, msgType)
+}
+
+func newSender(key string, msgType string) *Sender {
 	if msgType == "" {
 		msgType = MsgTypeMarkdown
 	}
@@ -23,10 +27,39 @@ func NewSender(key string, msgType string) *Sender {
 }
 
 func (s *Sender) Send(payload *models.Payload) error {
-	payload2Msg, ok := SupportedMsgtypes[s.msgType]
+	payload2Msg, ok := Payload2MsgFnMap[s.msgType]
 	if !ok {
 		return fmt.Errorf("unkown msg type")
 	}
 	msg := payload2Msg(payload)
+
+	return s.SendMsg(msg)
+}
+
+func (s *Sender) SendMsg(msgSource interface{}) error {
+	return s.SendMsgT(s.msgType, msgSource)
+}
+
+func (s *Sender) SendMsgT(msgType string, msgSource interface{}) error {
+	msg, ok := msgSource.(*Msg)
+	if !ok {
+		return fmt.Errorf("passed msgSource is not type *weixin.Msg")
+	}
+
+	switch msgType {
+	case MsgTypeFile:
+	case MsgTypeImage:
+	case MsgTypeMarkdown:
+	case MsgTypeNews:
+	case MsgTypeText:
+	case MsgTypeTemplateCard:
+	default:
+		return fmt.Errorf("unsupported msgtype of (%s)", msgType)
+	}
+
+	if err := ValidMsg(msgType, msg); err != nil {
+		return fmt.Errorf("valid msg failed, err: %s", err)
+	}
+
 	return s.bot.Send(msg)
 }

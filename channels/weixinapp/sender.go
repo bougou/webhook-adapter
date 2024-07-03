@@ -11,6 +11,8 @@ type Sender struct {
 	msgType string
 }
 
+var _ models.Sender = (*Sender)(nil)
+
 func NewSender(corpID string, agentID int, agentSecret string, msgType string, toUser string, toParty string, toTag string) models.Sender {
 	return newSender(corpID, agentID, agentSecret, msgType, toUser, toParty, toTag)
 }

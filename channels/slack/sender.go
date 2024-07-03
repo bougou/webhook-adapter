@@ -11,6 +11,8 @@ type Sender struct {
 	msgType string
 }
 
+var _ models.Sender = (*Sender)(nil)
+
 func NewSender(token string, channel string, msgType string) models.Sender {
 	if msgType == "" {
 		msgType = MsgTypeMarkdown

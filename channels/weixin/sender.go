@@ -11,6 +11,8 @@ type Sender struct {
 	msgType string
 }
 
+var _ models.Sender = (*Sender)(nil)
+
 func NewSender(key string, msgType string) models.Sender {
 	return newSender(key, msgType)
 }

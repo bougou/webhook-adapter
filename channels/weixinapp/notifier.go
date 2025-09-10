@@ -121,7 +121,7 @@ func (n *Notifier) Send(msg *Msg) error {
 	msg.ToParty = n.toParty
 	msg.ToTag = n.toTag
 
-	if err := ValidMsg(msg.MsgType, msg); err != nil {
+	if err := validateMsg(msg.MsgType, msg); err != nil {
 		return fmt.Errorf("valid msg failed, err: %s", err)
 	}
 

@@ -65,7 +65,7 @@ func (msg *Msg) WithAtMobiles(mobiles []string) *Msg {
 	return msg
 }
 
-func ValidMsg(msgType string, msg *Msg) error {
+func validateMsg(msgType string, msg *Msg) error {
 	if msg.MsgType != msgType {
 		return fmt.Errorf("the msg does not match with specified msgType")
 	}

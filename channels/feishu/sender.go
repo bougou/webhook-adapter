@@ -41,7 +41,7 @@ func (s *Sender) SendMsgT(msgType string, msgSource interface{}) error {
 		return fmt.Errorf("passed msgSource is not type *feishu.Msg")
 	}
 
-	if err := ValidMsg(msgType, msg); err != nil {
+	if err := validateMsg(msgType, msg); err != nil {
 		return fmt.Errorf("valid msg failed, err: %s", err)
 	}
 

@@ -41,9 +41,5 @@ func (s *Sender) SendMsgT(msgType string, msgSource interface{}) error {
 		return fmt.Errorf("passed msgSource is not type *weixinapp.Msg")
 	}
 
-	if err := ValidMsg(msgType, msg); err != nil {
-		return fmt.Errorf("valid msg failed, err: %s", err)
-	}
-
 	return s.notifer.Send(msg)
 }

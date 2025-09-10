@@ -43,7 +43,7 @@ type Payload2MsgFn func(payload *models.Payload) *Msg
 
 var Payload2MsgFnMap = make(map[string]Payload2MsgFn)
 
-func ValidMsg(msgType string, msg *Msg) error {
+func validateMsg(msgType string, msg *Msg) error {
 	if msg.MsgType != msgType {
 		return fmt.Errorf("the msg does not match with specified msgType")
 	}

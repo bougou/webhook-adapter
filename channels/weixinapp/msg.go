@@ -69,7 +69,7 @@ type Msg struct {
 	DuplicateCheckInterval int `json:"duplicate_check_interval,omitempty"`
 }
 
-func ValidMsg(msgType string, msg *Msg) error {
+func validateMsg(msgType string, msg *Msg) error {
 	if msg.MsgType != msgType {
 		return fmt.Errorf("the msg does not match with specified msgType")
 	}
@@ -82,10 +82,6 @@ func ValidMsg(msgType string, msg *Msg) error {
 	case MsgTypeText:
 	default:
 		return fmt.Errorf("unsupported msgtype of (%s)", msgType)
-	}
-
-	if msg.ToUser == "" && msg.ToParty == "" && msg.ToTag == "" {
-		return fmt.Errorf("toUser,toParty,toTag CAN NOT be empty at the same time")
 	}
 
 	return nil

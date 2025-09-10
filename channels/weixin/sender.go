@@ -57,7 +57,7 @@ func (s *Sender) SendMsgT(msgType string, msgSource interface{}) error {
 		return fmt.Errorf("unsupported msgtype of (%s)", msgType)
 	}
 
-	if err := ValidMsg(msgType, msg); err != nil {
+	if err := validateMsg(msgType, msg); err != nil {
 		return fmt.Errorf("valid msg failed, err: %s", err)
 	}
 

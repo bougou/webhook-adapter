@@ -44,6 +44,14 @@ var Payload2MsgFnMap = make(map[string]Payload2MsgFn)
 
 func validateMsg(msgType string, msg *Msg) error {
 	if msg.MsgType != msgType {
+
+		if msgType == MsgTypeMarkdown {
+			// markdown msg currently implemented as interactive msg.
+			if msg.MsgType == MsgTypeInteractive || msg.MsgType == MsgTypeMarkdown {
+				return nil
+			}
+		}
+
 		return fmt.Errorf("the msg does not match with specified msgType")
 	}
 

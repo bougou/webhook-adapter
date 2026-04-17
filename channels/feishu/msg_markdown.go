@@ -11,12 +11,18 @@ func init() {
 
 func NewMsgMarkdown(title string, markdown string) *Msg {
 	card := NewCardMarkdown(title, markdown)
-	return NewMsgInteractive(card)
+	return &Msg{
+		MsgType: MsgTypeInteractive,
+		Card:    card,
+	}
 }
 
 func NewMsgMarkdownFromPayload(payload *models.Payload) *Msg {
 	card := NewCardMarkdown(payload.Title, payload.Markdown)
-	return NewMsgInteractive(card)
+	return &Msg{
+		MsgType: MsgTypeInteractive,
+		Card:    card,
+	}
 }
 
 func NewCardMarkdown(title string, markdown string) *Card {
